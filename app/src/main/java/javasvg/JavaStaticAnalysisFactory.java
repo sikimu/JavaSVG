@@ -9,9 +9,9 @@ public class JavaStaticAnalysisFactory {
   public static JavaStaticAnalysisResult create(File file) throws Exception {
 
     BufferedReader reader = new BufferedReader(new FileReader(file));
- 
-    // 一ブロック分ごとに文字列を格納するリスト
-    ArrayList<String> blockList = new ArrayList<String>();
+
+    // 解析結果クラス
+    JavaStaticAnalysisResult result = new JavaStaticAnalysisResult("");
 
     String tempString = "";
 
@@ -38,13 +38,13 @@ public class JavaStaticAnalysisFactory {
       }
 
       if(isFix){
-        blockList.add(tempString);
+        result.add(tempString);
         tempString = "";
         isFix = false;
       }
     }
 
     reader.close();
-    return new JavaStaticAnalysisResult(String.join("\r\n", blockList));
+    return new JavaStaticAnalysisResult(result.toString());
   }
 }

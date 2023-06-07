@@ -14,4 +14,12 @@ public class JavaStaticAnalysisResult {
   public void setResult(String result) {
     this.result = result;
   }
+
+  public void add(String tempString) {
+    this.result = tempString;
+  }
+
+  public String toString() {
+    return result;
+  }
 }

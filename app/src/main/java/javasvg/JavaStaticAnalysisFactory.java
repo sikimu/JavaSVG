@@ -3,7 +3,6 @@ package javasvg;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.util.ArrayList;
 
 public class JavaStaticAnalysisFactory {
   public static JavaStaticAnalysisResult create(File file) throws Exception {

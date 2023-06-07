@@ -17,8 +17,8 @@ public class App {
         for (int i = 0; i < fileList.size(); i++) {
             File file = fileList.get(i);
             if (file.getName().endsWith(".java")) {
-                JavaStaticAnalysisResult result = JavaStaticAnalysisFactory.create(file);
-                System.out.println(result.getResult());
+                JavaStaticAnalysisResultSource result = JavaStaticAnalysisFactory.create(file);
+                System.out.println(result.toString());
             }
         }
 

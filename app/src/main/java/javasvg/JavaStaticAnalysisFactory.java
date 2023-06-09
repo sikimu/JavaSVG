@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class JavaStaticAnalysisFactory {
   public static JavaStaticAnalysisResultSource create(File file) throws IOException {
@@ -28,36 +27,13 @@ public class JavaStaticAnalysisFactory {
     // 解析結果(ソースコード)
     JavaStaticAnalysisResultSource jsarSource = new JavaStaticAnalysisResultSource();
 
-    // 1文節の文字列を取得
-    ArrayList<String> wordList = extractWordList(source, index);
-
-    jsarSource.add(new JavaStaticAnalysisResultCode(wordList.toString()));
+    // 1文節を取得
+    Signature signature = new Signature();
+    while (index < source.length()) {
+      index = signature.extract(source, index) + 1;
+      jsarSource.add(new JavaStaticAnalysisResultCode(signature.toString()));
+    }
 
     return jsarSource;
-  }
-
-  static ArrayList<String> extractWordList(String source, int index) {
-
-    ArrayList<String> wordList = new ArrayList<String>();
-
-    String word = "";
-    while (index < source.length()) {
-      char c = source.charAt(index);
-      if (c == ' ' || c == '\n' || c == '\t' || c == '\r') {
-        if (word.length() > 0) {
-          wordList.add(word);
-          word = "";
-        }
-      } else if (c == '(' || c == ')' || c == '{' || c == '}' || c == ';') {
-        if (word.length() > 0) {
-          wordList.add(word);
-        }
-        break;
-      } else {
-        word += c;
-      }
-      index++;
-    }
-    return wordList;
   }
 }

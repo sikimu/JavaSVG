@@ -9,8 +9,8 @@ public class JavaStaticAnalysisResultSource extends JavaStaticAnalysisResult {
         this.list = new ArrayList<JavaStaticAnalysisResult>();
     }
 
-    public void add(JavaStaticAnalysisResultCode javaStaticAnalysisResultCode) {
-        this.list.add(javaStaticAnalysisResultCode);
+    public void add(JavaStaticAnalysisResult result) {
+        this.list.add(result);
     }
 
     public String toString() {

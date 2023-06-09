@@ -41,6 +41,10 @@ class Signature {
       return index;
     }
 
+    public boolean contains(String word) {
+      return wordList.contains(word);
+    }
+
     @Override
     public String toString() {
       StringBuilder sb = new StringBuilder();

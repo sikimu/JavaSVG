@@ -28,10 +28,20 @@ public class JavaStaticAnalysisFactory {
     JavaStaticAnalysisResultSource jsarSource = new JavaStaticAnalysisResultSource();
 
     // 1文節を取得
-    Signature signature = new Signature();
     while (index < source.length()) {
-      index = signature.extract(source, index) + 1;
-      jsarSource.add(new JavaStaticAnalysisResultCode(signature.toString()));
+      Signature signature = new Signature();
+      index = signature.extract(source, index);
+      // クラス文節だった
+      if(signature.contains("class")){
+        JavaStaticAnalysisResultCode code = new JavaStaticAnalysisResultCode(signature.toString());
+        JavaStaticAnalysisResultClass jsarClass = new JavaStaticAnalysisResultClass(code);
+        jsarSource.add(jsarClass);
+        index++;
+      }
+      else{
+        jsarSource.add(new JavaStaticAnalysisResultCode(signature.toString()));
+        index++;
+      }
     }
 
     return jsarSource;

@@ -3,9 +3,12 @@ import java.util.ArrayList;
 
 public class JavaStaticAnalysisResultClass extends JavaStaticAnalysisResult {
 
+    private JavaStaticAnalysisResultCode code;
+
     private ArrayList<JavaStaticAnalysisResult> list;
 
-    public JavaStaticAnalysisResultClass() {
+    public JavaStaticAnalysisResultClass(JavaStaticAnalysisResultCode code) {
+        this.code = code;
         this.list = new ArrayList<JavaStaticAnalysisResult>();
     }
 
@@ -14,10 +17,7 @@ public class JavaStaticAnalysisResultClass extends JavaStaticAnalysisResult {
     }
 
     public String toString() {
-        String result = "";
-        for (int i = 0; i < this.list.size(); i++) {
-            result = result + this.list.get(i).toString() + "\n";
-        }
-        return list.stream().map(JavaStaticAnalysisResult::toString).reduce("", (a, b) -> a + "\n" + b);
+        String result = "class code\n" + code.toString();
+        return result + list.stream().map(JavaStaticAnalysisResult::toString).reduce("", (a, b) -> a + "\n" + b);
     }
 }

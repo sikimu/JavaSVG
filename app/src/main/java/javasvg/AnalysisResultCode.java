@@ -1,10 +1,10 @@
 package javasvg;
 
-public class JavaStaticAnalysisResultCode extends JavaStaticAnalysisResult {
+public class AnalysisResultCode extends AnalysisResult {
 
     String code;
 
-    public JavaStaticAnalysisResultCode(String code) {
+    public AnalysisResultCode(String code) {
         this.code = code;
     }
 

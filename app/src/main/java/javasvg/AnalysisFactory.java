@@ -5,8 +5,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class JavaStaticAnalysisFactory {
-  public static JavaStaticAnalysisResultSource create(File file) throws IOException {
+public class AnalysisFactory {
+  public static AnalysisResultSource create(File file) throws IOException {
     String source = readFileToString(file);
     return createSource(source, 0);
   }
@@ -22,10 +22,10 @@ public class JavaStaticAnalysisFactory {
     return source.toString();
   }
 
-  static JavaStaticAnalysisResultSource createSource(String source, int index){
+  static AnalysisResultSource createSource(String source, int index){
 
     // 解析結果(ソースコード)
-    JavaStaticAnalysisResultSource jsarSource = new JavaStaticAnalysisResultSource();
+    AnalysisResultSource jsarSource = new AnalysisResultSource();
 
     // 1文節を取得
     while (index < source.length()) {
@@ -33,13 +33,13 @@ public class JavaStaticAnalysisFactory {
       index = signature.extract(source, index);
       // クラス文節だった
       if(signature.contains("class")){
-        JavaStaticAnalysisResultCode code = new JavaStaticAnalysisResultCode(signature.toString());
-        JavaStaticAnalysisResultClass jsarClass = new JavaStaticAnalysisResultClass(code);
-        jsarSource.add(jsarClass);
+        AnalysisResultCode code = new AnalysisResultCode(signature.toString());
+        AnalysisResultClass resultClass = new AnalysisResultClass(code);
+        jsarSource.add(resultClass);
         index++;
       }
       else{
-        jsarSource.add(new JavaStaticAnalysisResultCode(signature.toString()));
+        jsarSource.add(new AnalysisResultCode(signature.toString()));
         index++;
       }
     }

@@ -22,6 +22,7 @@ class Signature {
       String word = "";
       while (index < source.length()) {
         char c = source.charAt(index);
+
         if (c == ' ' || c == '\n' || c == '\t' || c == '\r') {
           if (word.length() > 0) {
             wordList.add(word);
@@ -31,6 +32,9 @@ class Signature {
           
           if (word.length() > 0) {
             wordList.add(word);
+          }
+          else{
+            wordList.add(String.valueOf(c));
           }
           break;
         } else {
@@ -55,5 +59,9 @@ class Signature {
         }
       }
       return sb.toString();
+    }
+
+    public String get(int i) {
+        return wordList.get(i);
     }
   }

@@ -67,7 +67,7 @@ class Signature {
       return wordList.get(i);
     }
 
-    public Object size() {
+    public int size() {
       return wordList.size();
     }
   }

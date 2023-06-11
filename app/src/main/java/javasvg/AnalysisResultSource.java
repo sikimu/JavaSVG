@@ -13,6 +13,10 @@ public class AnalysisResultSource extends AnalysisResult {
         this.list.add(result);
     }
 
+    public AnalysisResult get(int index) {
+        return list.get(index);
+    }
+
     public String toString() {
         String result = "";
         for (int i = 0; i < this.list.size(); i++) {

@@ -39,10 +39,20 @@ public class SignatureTest {
         Signature signature = new Signature();
 
         String source = "e);";
-        int index = signature.extract(source, 1);
+        int index = signature.extract(source, 0);
         
+        assertEquals(1, index);
+        assertEquals(1, signature.size());
+        assertEquals("e", signature.get(0));
+
+        index = signature.extract(source, index);
         assertEquals(2, index);
         assertEquals(1, signature.size());
-        assertEquals(")", signature.get(0));
+        assertEquals(")", signature.get(0));     
+        
+        index = signature.extract(source, index);
+        assertEquals(3, index);
+        assertEquals(1, signature.size());
+        assertEquals(";", signature.get(0));          
     }        
 }

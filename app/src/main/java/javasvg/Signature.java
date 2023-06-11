@@ -23,7 +23,21 @@ class Signature {
       while (index < source.length()) {
         char c = source.charAt(index);
 
-        if (c == ' ' || c == '\n' || c == '\t' || c == '\r') {
+        if(c == '"'){
+          word += c;
+          index++;
+          while (index < source.length()) {
+            c = source.charAt(index);
+            word += c;
+            if (c == '"') {
+              break;
+            }
+            index++;
+          }
+          wordList.add(word);
+          word = "";
+        }
+        else if (c == ' ' || c == '\n' || c == '\t' || c == '\r') {
           if (word.length() > 0) {
             wordList.add(word);
             word = "";
@@ -32,9 +46,11 @@ class Signature {
           
           if (word.length() > 0) {
             wordList.add(word);
+            word = "";
           }
           else if(word.length() == 0 && wordList.size() == 0){
             wordList.add(String.valueOf(c));
+            word = "";
             index++;
           }
           
@@ -44,6 +60,11 @@ class Signature {
         }
         index++;
       }
+
+      if(word.length() > 0){
+        wordList.add(word);
+      }
+
       return index;
     }
 

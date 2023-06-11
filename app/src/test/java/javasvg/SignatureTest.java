@@ -55,4 +55,18 @@ public class SignatureTest {
         assertEquals(1, signature.size());
         assertEquals(";", signature.get(0));          
     }        
+
+    @Test
+    @DisplayName("ダブルコーテーションが含まれているもののテスト")
+    public void testExtract4() {
+        Signature signature = new Signature();
+
+        String source = "public \"aaa\" aiueo";
+        int index = signature.extract(source, 0);
+
+        assertEquals(18, index);
+        assertEquals("public", signature.get(0));
+        assertEquals("\"aaa\"", signature.get(1));
+        assertEquals("aiueo", signature.get(2));
+    }    
 }

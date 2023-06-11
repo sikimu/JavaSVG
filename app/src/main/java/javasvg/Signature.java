@@ -33,9 +33,11 @@ class Signature {
           if (word.length() > 0) {
             wordList.add(word);
           }
-          else{
+          else if(word.length() == 0 && wordList.size() == 0){
             wordList.add(String.valueOf(c));
+            index++;
           }
+          
           break;
         } else {
           word += c;
@@ -62,6 +64,10 @@ class Signature {
     }
 
     public String get(int i) {
-        return wordList.get(i);
+      return wordList.get(i);
+    }
+
+    public Object size() {
+      return wordList.size();
     }
   }

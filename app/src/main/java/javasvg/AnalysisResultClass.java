@@ -4,15 +4,19 @@ public class AnalysisResultClass extends AnalysisResult {
 
     private AnalysisResultCode code;
 
-    private AnalysisResultInBraces iBraces;
+    final public AnalysisResultInBraces inBraces;
 
     public AnalysisResultClass(AnalysisResultCode code, AnalysisResultInBraces inBraces) {
         this.code = code;
-        this.iBraces = inBraces;
+        this.inBraces = inBraces;
     }
 
     public String toString() {
         String result = "class code\n" + code.toString();
-        return result + iBraces.stream().map(AnalysisResult::toString).reduce("", (a, b) -> a + "\n" + b);
+        return result + inBraces.stream().map(AnalysisResult::toString).reduce("", (a, b) -> a + "\n" + b);
+    }
+
+    public Object getName() {
+        return code.toString();
     }
 }

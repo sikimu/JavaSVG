@@ -10,7 +10,7 @@ public class AnalysisResultInBraces extends AnalysisResult {
     private ArrayList<AnalysisResult> list;
 
     public AnalysisResultInBraces(ArrayList<AnalysisResult> list) {
-        this.list = new ArrayList<AnalysisResult>();
+        this.list = list;
     }
 
     public AnalysisResult get(int index) {

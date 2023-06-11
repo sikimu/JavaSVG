@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class AnalysisFactory {
   public static AnalysisResultSource create(File file) throws IOException {
@@ -31,8 +32,8 @@ public class AnalysisFactory {
     // 解析結果(ソースコード)
     AnalysisResultSource jsarSource = new AnalysisResultSource();
 
-    // 1文節を取得
     while (true) {
+      // 1文節を取得
       Signature signature = new Signature();
       index = signature.extract(source, index);
       if(signature.size() == 0){
@@ -42,7 +43,14 @@ public class AnalysisFactory {
       // クラス文節だった
       if(signature.contains("class")){
         AnalysisResultCode code = new AnalysisResultCode(signature.toString());
-        AnalysisResultClass resultClass = new AnalysisResultClass(code);
+        // 1文節を取得
+        Signature brances = new Signature();
+        index = brances.extract(source, index);
+        if (brances.contains("{") == false) {
+          throw new RuntimeException("クラスの開始ブレースがありません");
+        }
+        AnalysisResultInBraces inBraces = new AnalysisResultInBraces(createInBrances(source, index));
+        AnalysisResultClass resultClass = new AnalysisResultClass(code, inBraces);
         jsarSource.add(resultClass);
       }
       else{
@@ -51,5 +59,29 @@ public class AnalysisFactory {
     }
 
     return jsarSource;
+  }
+
+  private static ArrayList<AnalysisResult> createInBrances(String source, int index) {
+
+    ArrayList<AnalysisResult> list = new ArrayList<AnalysisResult>();
+
+    while (true) {
+      // 1文節を取得
+      Signature signature = new Signature();
+      index = signature.extract(source, index);
+
+      if (signature.contains("{")) {
+        AnalysisResultInBraces inBraces = new AnalysisResultInBraces(createInBrances(source, index));
+        list.add(inBraces);
+      }
+      else if (signature.contains("}")) {
+        break;
+      } 
+      else{
+        list.add(new AnalysisResultCode(signature.toString()));
+      }
+    }
+
+    return list;
   }
 }

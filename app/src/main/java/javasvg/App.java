@@ -8,6 +8,8 @@ public class App {
 
         AnalysisResultPackage result = AnalysisFactory.createPackage(folderPath);
 
+        System.out.println(result.getAllClasses());
+
         SVGCreator.createSVG("C:\\Users\\iihit\\java\\output.svg");
     }
 }

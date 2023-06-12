@@ -14,7 +14,7 @@ public class AnalysisFactory {
     // folderPath内のファイルを再帰的に取得
     List<File> fileList = getAllFiles(folderPath);
 
-    ArrayList<AnalysisResult> list = new ArrayList<AnalysisResult>();
+    ArrayList<AnalysisResultSource> list = new ArrayList<AnalysisResultSource>();
 
     // ファイル名をすべて出力
     for (int i = 0; i < fileList.size(); i++) {

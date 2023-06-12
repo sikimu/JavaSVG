@@ -16,7 +16,7 @@ public class AnalysisResultClass extends AnalysisResult {
         return result + inBraces.stream().map(AnalysisResult::toString).reduce("", (a, b) -> a + "\n" + b);
     }
 
-    public Object getName() {
+    public String getName() {
         return code.toString();
     }
 }

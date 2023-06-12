@@ -24,4 +24,8 @@ public class AnalysisResultSource extends AnalysisResult {
         }
         return list.stream().map(AnalysisResult::toString).reduce("", (a, b) -> a + "\n" + b);
     }
+
+    public int size() {
+        return list.size();
+    }
 }

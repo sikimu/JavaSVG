@@ -39,6 +39,9 @@ public class SVGCreator {
         svgGenerator.setPaint(Color.RED);
         svgGenerator.fill(drawingArea);
 
+        svgGenerator.setPaint(Color.BLACK);
+        svgGenerator.drawString("svgNS", 0, 100);
+
         // Write the SVG file.
         Writer out = new OutputStreamWriter(new FileOutputStream(new File(filePath)), "UTF-8");
         svgGenerator.stream(out, true /* use css */);

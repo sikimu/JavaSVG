@@ -5,8 +5,50 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class AnalysisFactory {
+
+  public static AnalysisResultPackage createPackage(String folderPath) throws Exception {
+
+    // folderPath内のファイルを再帰的に取得
+    List<File> fileList = getAllFiles(folderPath);
+
+    ArrayList<AnalysisResult> list = new ArrayList<AnalysisResult>();
+
+    // ファイル名をすべて出力
+    for (int i = 0; i < fileList.size(); i++) {
+      File file = fileList.get(i);
+      if (file.getName().endsWith(".java")) {
+        AnalysisResultSource result = AnalysisFactory.create(file);
+        System.out.println(result.toString());
+        list.add(result);
+      }
+    }
+
+    return new AnalysisResultPackage(list);
+  }
+
+  /**
+   * 再帰的にファイルを取得する
+   * 
+   * @param folderPath
+   * @throws Exception
+   */
+  private static List<File> getAllFiles(String folderPath) throws Exception {
+    List<File> fileList = new ArrayList<File>();
+    File[] files = new File(folderPath).listFiles();
+    for (int i = 0; i < files.length; i++) {
+      File file = files[i];
+      if (file.isDirectory()) {
+        fileList.addAll(getAllFiles(file.getPath()));
+      } else {
+        fileList.add(file);
+      }
+    }
+    return fileList;
+  }
+
   public static AnalysisResultSource create(File file) throws IOException {
     String source = readFileToString(file);
     return createSource(source, 0);
@@ -27,7 +69,7 @@ public class AnalysisFactory {
     return source.toString();
   }
 
-  static AnalysisResultSource createSource(String source, int index){
+  static AnalysisResultSource createSource(String source, int index) {
 
     // 解析結果(ソースコード)
     AnalysisResultSource jsarSource = new AnalysisResultSource();
@@ -36,12 +78,12 @@ public class AnalysisFactory {
       // 1文節を取得
       Signature signature = new Signature();
       index = signature.extract(source, index);
-      if(signature.size() == 0){
+      if (signature.size() == 0) {
         break;
       }
-      
+
       // クラス文節だった
-      if(signature.contains("class")){
+      if (signature.contains("class")) {
         AnalysisResultCode code = new AnalysisResultCode(signature.toString());
         // 1文節を取得
         Signature brances = new Signature();
@@ -52,8 +94,7 @@ public class AnalysisFactory {
         AnalysisResultInBraces inBraces = new AnalysisResultInBraces(createInBrances(source, index));
         AnalysisResultClass resultClass = new AnalysisResultClass(code, inBraces);
         jsarSource.add(resultClass);
-      }
-      else{
+      } else {
         jsarSource.add(new AnalysisResultCode(signature.toString()));
       }
     }
@@ -73,11 +114,9 @@ public class AnalysisFactory {
       if (signature.contains("{")) {
         AnalysisResultInBraces inBraces = new AnalysisResultInBraces(createInBrances(source, index));
         list.add(inBraces);
-      }
-      else if (signature.contains("}")) {
+      } else if (signature.contains("}")) {
         break;
-      } 
-      else{
+      } else {
         list.add(new AnalysisResultCode(signature.toString()));
       }
     }

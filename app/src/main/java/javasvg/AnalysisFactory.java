@@ -2,8 +2,10 @@ package javasvg;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +23,6 @@ public class AnalysisFactory {
       File file = fileList.get(i);
       if (file.getName().endsWith(".java")) {
         AnalysisResultSource result = AnalysisFactory.create(file);
-        System.out.println(result.toString());
         list.add(result);
       }
     }
@@ -59,7 +60,7 @@ public class AnalysisFactory {
   }
 
   static String readFileToString(File file) throws IOException {
-    BufferedReader reader = new BufferedReader(new FileReader(file));
+    BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
     StringBuilder source = new StringBuilder();
     String line;
     while ((line = reader.readLine()) != null) {

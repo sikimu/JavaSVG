@@ -69,4 +69,17 @@ public class SignatureTest {
         assertEquals("\"aaa\"", signature.get(1));
         assertEquals("aiueo", signature.get(2));
     }    
+
+    @Test
+    @DisplayName("/**/が含まれているもののテスト")
+    public void testExtract5() {
+        Signature signature = new Signature();
+
+        String source = "pu/*aiueo*/ueo";
+        signature.extract(source, 0);
+
+        assertEquals("pu", signature.get(0));
+        assertEquals("/*aiueo*/", signature.get(1));
+        assertEquals("ueo", signature.get(2));
+    }   
 }

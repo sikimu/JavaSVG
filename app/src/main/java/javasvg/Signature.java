@@ -23,7 +23,27 @@ class Signature {
       while (index < source.length()) {
         char c = source.charAt(index);
 
-        if(c == '"'){
+        if (source.substring(index).startsWith("/*")) {
+          if(word.length() > 0){
+            wordList.add(word);
+            word = "";
+          }
+          word += "/*";
+          index += 2;
+          while (index < source.length()) {
+            if (source.substring(index).startsWith("*/")) {
+              break;
+            }            
+            c = source.charAt(index);
+            word += c;
+            index++;
+          }
+          word += "*/";
+          wordList.add(word);
+          word = "";
+          index ++;
+        }
+        else if(c == '"'){
           word += c;
           index++;
           while (index < source.length()) {

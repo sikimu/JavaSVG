@@ -2,11 +2,11 @@ package javasvg;
 
 public class AnalysisResultClass extends AnalysisResult {
 
-    private AnalysisResultCode code;
+    private AnalysisResultClassCode code;
 
     final public AnalysisResultInBraces inBraces;
 
-    public AnalysisResultClass(AnalysisResultCode code, AnalysisResultInBraces inBraces) {
+    public AnalysisResultClass(AnalysisResultClassCode code, AnalysisResultInBraces inBraces) {
         this.code = code;
         this.inBraces = inBraces;
     }
@@ -17,6 +17,6 @@ public class AnalysisResultClass extends AnalysisResult {
     }
 
     public String getName() {
-        return code.toString();
+        return code.getName();
     }
 }

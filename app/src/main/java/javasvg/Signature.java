@@ -1,6 +1,7 @@
 package javasvg;
 
 import java.util.ArrayList;
+import java.util.stream.Stream;
 
 class Signature {
     private ArrayList<String> wordList;
@@ -110,5 +111,9 @@ class Signature {
 
     public int size() {
       return wordList.size();
+    }
+
+    public Stream<String> stream() {
+      return wordList.stream();
     }
   }

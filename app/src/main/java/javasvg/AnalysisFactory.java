@@ -3,7 +3,6 @@ package javasvg;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -85,7 +84,7 @@ public class AnalysisFactory {
 
       // クラス文節だった
       if (signature.contains("class")) {
-        AnalysisResultCode code = new AnalysisResultCode(signature.toString());
+        AnalysisResultClassCode code = new AnalysisResultClassCode(signature);
         // 1文節を取得
         Signature brances = new Signature();
         index = brances.extract(source, index);

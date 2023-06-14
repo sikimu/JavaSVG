@@ -21,7 +21,7 @@ public class AnalysisFactoryTest {
 
         assertTrue(arSource.get(0) instanceof AnalysisResultClass);
         AnalysisResultClass arClass = (AnalysisResultClass) arSource.get(0);
-        assertEquals("public class A", arClass.getName());
+        assertEquals("A", arClass.getName());
 
         assertEquals("aaaa", arClass.inBraces.get(0).toString());
         assertTrue(arClass.inBraces.get(1) instanceof AnalysisResultInBraces);

@@ -1,5 +1,11 @@
 package javasvg;
 
+import java.util.ArrayList;
+
+import javasvg.svg.JavaSVG;
+import javasvg.svg.JavaSVGFactory;
+import javasvg.svg.SVGCreator;
+
 public class App {
 
     private static String folderPath = "c:\\Users\\iihit\\java\\JavaSVG";
@@ -10,6 +16,8 @@ public class App {
 
         System.out.println(String.join("\n", result.getAllClasses()));
 
-        SVGCreator.createSVG("C:\\Users\\iihit\\java\\output.svg");
+        ArrayList<JavaSVG> svgs = JavaSVGFactory.create(result);
+
+        SVGCreator.createSVG("C:\\Users\\iihit\\java\\output.svg", svgs);
     }
 }

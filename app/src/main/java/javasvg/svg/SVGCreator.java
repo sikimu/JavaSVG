@@ -1,5 +1,5 @@
 // BEGIN: ed8c6549bwf9
-package javasvg;
+package javasvg.svg;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.util.ArrayList;
 
 import org.apache.batik.dom.GenericDOMImplementation;
 import org.apache.batik.svggen.SVGGraphics2D;
@@ -16,7 +17,7 @@ import org.w3c.dom.Document;
 
 public class SVGCreator {
 
-    public static void createSVG(String filePath) throws Exception {
+    public static void createSVG(String filePath, ArrayList<JavaSVG> svgs) throws Exception {
         // Get a DOMImplementation.
         DOMImplementation domImpl = GenericDOMImplementation.getDOMImplementation();
 
@@ -31,16 +32,16 @@ public class SVGCreator {
         svgGenerator.setBackground(Color.WHITE);
 
         // Set the drawing area.
-        Dimension size = new Dimension(200, 200);
+        Dimension size = new Dimension(1024, 1024);
         Rectangle2D.Double drawingArea = new Rectangle2D.Double(0, 0, size.width, size.height);
         svgGenerator.setSVGCanvasSize(size);
 
-        // Draw a rectangle.
-        svgGenerator.setPaint(Color.RED);
-        svgGenerator.fill(drawingArea);
-
-        svgGenerator.setPaint(Color.BLACK);
-        svgGenerator.drawString("svgNS", 0, 100);
+        for (JavaSVG svg : svgs) {
+            svgGenerator.setPaint(Color.RED);
+            svgGenerator.fill(drawingArea);
+            svgGenerator.setPaint(Color.BLACK);
+            svgGenerator.drawString("svgNS", 0, 100);
+        }
 
         // Write the SVG file.
         Writer out = new OutputStreamWriter(new FileOutputStream(new File(filePath)), "UTF-8");

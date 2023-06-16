@@ -35,12 +35,12 @@ public class SVGCreator {
         Dimension size = new Dimension(1024, 1024);
         Rectangle2D.Double drawingArea = new Rectangle2D.Double(0, 0, size.width, size.height);
         svgGenerator.setSVGCanvasSize(size);
+        svgGenerator.setPaint(Color.RED);
 
         for (JavaSVG svg : svgs) {
-            svgGenerator.setPaint(Color.RED);
             svgGenerator.fill(drawingArea);
             svgGenerator.setPaint(Color.BLACK);
-            svgGenerator.drawString("svgNS", 0, 100);
+            svgGenerator.drawString(svg.code, 0, 100);
         }
 
         // Write the SVG file.

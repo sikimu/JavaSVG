@@ -52,11 +52,11 @@ public class AnalysisFactory {
   public static AnalysisResultSource create(File file) throws IOException {
     String source = readFileToString(file);
 
-    return createSource(createSignatureList(source));
+    return createSource(SignaturesFactory.create(source));
   }
 
   public static AnalysisResultSource create(String source) {
-    return createSource(createSignatureList(source));
+    return createSource(SignaturesFactory.create(source));
   }
 
   static String readFileToString(File file) throws IOException {
@@ -68,23 +68,6 @@ public class AnalysisFactory {
     }
     reader.close();
     return source.toString();
-  }
-
-  // 文節リストを作成
-  private static ArrayList<Signature> createSignatureList(String source) {
-    ArrayList<Signature> signatures = new ArrayList<Signature>();
-
-    Index index = new Index(0);
-    while (true) {
-      // 1文節を取得
-      Signature signature = new Signature(source, index);
-      if (signature.size() == 0) {
-        break;
-      }
-      signatures.add(signature);
-    }
-
-    return signatures;
   }
 
   /**

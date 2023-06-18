@@ -90,11 +90,6 @@ public class AnalysisFactory {
       // クラス文節だった
       if (signature.contains("class")) {
         AnalysisResultClassCode code = new AnalysisResultClassCode(signature);
-        // 1文節を取得
-        Signature brances = signatures.get(index.get());
-        if (brances.contains("{") == false) {
-          throw new RuntimeException("クラスの開始ブレースがありません");
-        }
 
         AnalysisResultClass resultClass = new AnalysisResultClass(code, AnalysisResultInBraces.create(signatures, index));
         jsarSource.add(resultClass);

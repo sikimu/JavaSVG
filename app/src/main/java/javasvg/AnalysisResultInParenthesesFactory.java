@@ -2,18 +2,18 @@ package javasvg;
 
 import java.util.ArrayList;
 
-class AnalysisInBracesFactory {
+class AnalysisResultInParenthesesFactory {
 
     public final int fixIndex;
 
     private ArrayList<AnalysisResult> list;
     
-    public AnalysisInBracesFactory(ArrayList<Signature> signatures, int index) {
+    public AnalysisResultInParenthesesFactory(ArrayList<Signature> signatures, int index) {
         this.list = new ArrayList<AnalysisResult>();
 
         Signature signature = signatures.get(index);
 
-        if (signature.contains("{") == false) {
+        if (signature.contains("(") == false) {
             throw new IllegalArgumentException("開始括弧がありません");
         }
         index++;
@@ -21,16 +21,11 @@ class AnalysisInBracesFactory {
         while (signatures.size() > index) {
             signature = signatures.get(index);
 
-            if (signature.contains("{")) {
+            if (signature.contains("(")) {
                 AnalysisInBracesFactory factory = new AnalysisInBracesFactory(signatures, index);
                 list.add(factory.createInBrances());
                 index = factory.getFixIndex();
-            } 
-            if (signature.contains("(")){
-                AnalysisResultInParenthesesFactory factory = new AnalysisResultInParenthesesFactory(signatures, index);
-                list.add(factory.createInParentheses());
-                index = factory.getFixIndex();
-            } else if (signature.contains("}")) {
+            } else if (signature.contains(")")) {
                 index++;
                 break;
             } else {
@@ -42,8 +37,8 @@ class AnalysisInBracesFactory {
         fixIndex = index;
     }
 
-    public AnalysisResultInBraces createInBrances() {
-        return new AnalysisResultInBraces(list);
+    public AnalysisResultInParentheses createInParentheses() {
+        return new AnalysisResultInParentheses(list);
     }
 
     /**

@@ -25,4 +25,8 @@ public class AnalysisResultInParentheses extends AnalysisResult {
     public String toString() {
         return "{\n" + list.stream().map(AnalysisResult::toString).reduce("", (a, b) -> a + "\n" + b) + "\n}";
     }
+
+    public Integer size() {
+        return list.size();
+    }
 }

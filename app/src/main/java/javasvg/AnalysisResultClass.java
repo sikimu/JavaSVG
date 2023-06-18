@@ -1,14 +1,19 @@
 package javasvg;
 
+import java.util.ArrayList;
+
 public class AnalysisResultClass extends AnalysisResult {
 
     private AnalysisResultClassCode code;
 
     final public AnalysisResultInBraces inBraces;
 
-    public AnalysisResultClass(AnalysisResultClassCode code, AnalysisResultInBraces inBraces) {
-        this.code = code;
-        this.inBraces = inBraces;
+    public AnalysisResultClass(ArrayList<Signature> signatures, Index index) {
+        Signature signature = signatures.get(index.get());
+        index.increment();
+
+        this.code = new AnalysisResultClassCode(signature);
+        this.inBraces = AnalysisResultInBraces.create(signatures, index);
     }
 
     public String toString() {

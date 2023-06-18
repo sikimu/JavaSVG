@@ -14,46 +14,45 @@ class Signature {
      * 1文節を取得
      * @param source
      * @param index
-     * @return
      */
-    int extract(String source, int index) {
+    void extract(String source, Index index) {
 
       wordList.clear();
 
       String word = "";
-      while (index < source.length()) {
-        char c = source.charAt(index);
+      while (index.get() < source.length()) {
+        char c = source.charAt(index.get());
 
-        if (source.substring(index).startsWith("/*")) {
+        if (source.substring(index.get()).startsWith("/*")) {
           if(word.length() > 0){
             wordList.add(word);
             word = "";
           }
           word += "/*";
-          index += 2;
-          while (index < source.length()) {
-            if (source.substring(index).startsWith("*/")) {
+          index.add(2);
+          while (index.get() < source.length()) {
+            if (source.substring(index.get()).startsWith("*/")) {
               break;
             }            
-            c = source.charAt(index);
+            c = source.charAt(index.get());
             word += c;
-            index++;
+            index.increment();
           }
           word += "*/";
           wordList.add(word);
           word = "";
-          index ++;
+          index.increment();
         }
         else if(c == '"'){
           word += c;
-          index++;
-          while (index < source.length()) {
-            c = source.charAt(index);
+          index.increment();
+          while (index.get() < source.length()) {
+            c = source.charAt(index.get());
             word += c;
             if (c == '"') {
               break;
             }
-            index++;
+            index.increment();
           }
           wordList.add(word);
           word = "";
@@ -72,21 +71,19 @@ class Signature {
           else if(word.length() == 0 && wordList.size() == 0){
             wordList.add(String.valueOf(c));
             word = "";
-            index++;
+            index.increment();
           }
           
           break;
         } else {
           word += c;
         }
-        index++;
+        index.increment();
       }
 
       if(word.length() > 0){
         wordList.add(word);
       }
-
-      return index;
     }
 
     public boolean contains(String word) {

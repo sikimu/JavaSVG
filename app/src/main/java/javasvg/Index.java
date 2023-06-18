@@ -15,4 +15,8 @@ public class Index{
     public void increment(){
         index++;
     }
+
+    public void add(int i) {
+        index += i;
+    }
 }

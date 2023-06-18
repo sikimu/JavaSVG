@@ -12,9 +12,10 @@ public class SignatureTest {
         Signature signature = new Signature();
 
         String source = "hello world";
-        int index = signature.extract(source, 0);
+        Index index = new Index(0);
+        signature.extract(source, index);
         
-        assertEquals(11, index);
+        assertEquals(11, index.get());
         assertEquals("hello", signature.get(0));
     }
 
@@ -24,9 +25,10 @@ public class SignatureTest {
         Signature signature = new Signature();
 
         String source = "public class Hello {aaaaaaaaaaaaaaaaaaa}";
-        int index = signature.extract(source, 0);
+        Index index = new Index(0);
+        signature.extract(source, index);
         
-        assertEquals(19, index);
+        assertEquals(19, index.get());
         assertEquals(3, signature.size());
         assertEquals("public", signature.get(0));
         assertEquals("class", signature.get(1));
@@ -39,19 +41,20 @@ public class SignatureTest {
         Signature signature = new Signature();
 
         String source = "e);";
-        int index = signature.extract(source, 0);
+        Index index = new Index(0);
+        signature.extract(source, index);
         
-        assertEquals(1, index);
+        assertEquals(1, index.get());
         assertEquals(1, signature.size());
         assertEquals("e", signature.get(0));
 
-        index = signature.extract(source, index);
-        assertEquals(2, index);
+        signature.extract(source, index);
+        assertEquals(2, index.get());
         assertEquals(1, signature.size());
         assertEquals(")", signature.get(0));     
         
-        index = signature.extract(source, index);
-        assertEquals(3, index);
+        signature.extract(source, index);
+        assertEquals(3, index.get());
         assertEquals(1, signature.size());
         assertEquals(";", signature.get(0));          
     }        
@@ -62,9 +65,10 @@ public class SignatureTest {
         Signature signature = new Signature();
 
         String source = "public \"aaa\" aiueo";
-        int index = signature.extract(source, 0);
+        Index index = new Index(0);
+        signature.extract(source, index);
 
-        assertEquals(18, index);
+        assertEquals(18, index.get());
         assertEquals("public", signature.get(0));
         assertEquals("\"aaa\"", signature.get(1));
         assertEquals("aiueo", signature.get(2));
@@ -76,7 +80,7 @@ public class SignatureTest {
         Signature signature = new Signature();
 
         String source = "pu/*aiueo*/ueo";
-        signature.extract(source, 0);
+        signature.extract(source, new Index(0));
 
         assertEquals("pu", signature.get(0));
         assertEquals("/*aiueo*/", signature.get(1));

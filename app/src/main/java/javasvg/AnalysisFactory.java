@@ -74,11 +74,11 @@ public class AnalysisFactory {
   private static ArrayList<Signature> createSignatureList(String source) {
     ArrayList<Signature> signatures = new ArrayList<Signature>();
 
-    int index = 0;
+    Index index = new Index(0);
     while (true) {
       // 1文節を取得
       Signature signature = new Signature();
-      index = signature.extract(source, index);
+      signature.extract(source, index);
       if (signature.size() == 0) {
         break;
       }

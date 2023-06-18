@@ -4,48 +4,35 @@ import java.util.ArrayList;
 
 class AnalysisResultInParenthesesFactory {
 
-    public final int fixIndex;
-
     private ArrayList<AnalysisResult> list;
     
-    public AnalysisResultInParenthesesFactory(ArrayList<Signature> signatures, int index) {
+    public AnalysisResultInParenthesesFactory(ArrayList<Signature> signatures, Index index) {
         this.list = new ArrayList<AnalysisResult>();
 
-        Signature signature = signatures.get(index);
+        Signature signature = signatures.get(index.get());
 
         if (signature.contains("(") == false) {
             throw new IllegalArgumentException("開始括弧がありません");
         }
-        index++;
+        index.increment();
 
-        while (signatures.size() > index) {
-            signature = signatures.get(index);
+        while (signatures.size() > index.get()) {
+            signature = signatures.get(index.get());
 
             if (signature.contains("(")) {
                 AnalysisResultInParenthesesFactory factory = new AnalysisResultInParenthesesFactory(signatures, index);
                 list.add(factory.createInParentheses());
-                index = factory.getFixIndex();
             } else if (signature.contains(")")) {
-                index++;
+                index.increment();;
                 break;
             } else {
                 list.add(new AnalysisResultCode(signature.toString()));
-                index++;
+                index.increment();;
             }            
         }
-
-        fixIndex = index;
     }
 
     public AnalysisResultInParentheses createInParentheses() {
         return new AnalysisResultInParentheses(list);
-    }
-
-    /**
-     * 解析完了時のインデックスを取得する
-     * @return
-     */
-    public int getFixIndex() {
-        return fixIndex;
     }
 }

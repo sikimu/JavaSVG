@@ -100,17 +100,17 @@ public class AnalysisFactory {
     // 解析結果(ソースコード)
     AnalysisResultSource jsarSource = new AnalysisResultSource();
 
-    int index = 0;
-    while (signatures.size() > index) {
+    Index index = new Index(0);
+    while (signatures.size() > index.get()) {
 
-      Signature signature = signatures.get(index);
-      index++;
+      Signature signature = signatures.get(index.get());
+      index.increment();
 
       // クラス文節だった
       if (signature.contains("class")) {
         AnalysisResultClassCode code = new AnalysisResultClassCode(signature);
         // 1文節を取得
-        Signature brances = signatures.get(index);
+        Signature brances = signatures.get(index.get());
         if (brances.contains("{") == false) {
           throw new RuntimeException("クラスの開始ブレースがありません");
         }

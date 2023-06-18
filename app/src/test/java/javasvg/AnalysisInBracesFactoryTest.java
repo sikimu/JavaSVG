@@ -13,7 +13,7 @@ public class AnalysisInBracesFactoryTest {
     public void testCreateInBraces() {
         ArrayList<Signature> signatures = SignaturesFactory.create("{int a; int b;}public int c;");
 
-        AnalysisInBracesFactory factory = new AnalysisInBracesFactory(signatures, 0);
+        AnalysisInBracesFactory factory = new AnalysisInBracesFactory(signatures, new Index(0));
         AnalysisResultInBraces result = factory.createInBrances();
 
         assertEquals(4, result.size());
@@ -21,6 +21,5 @@ public class AnalysisInBracesFactoryTest {
         assertTrue(result.get(1) instanceof AnalysisResultCode);
         assertTrue(result.get(2) instanceof AnalysisResultCode);
         assertTrue(result.get(3) instanceof AnalysisResultCode);
-        assertEquals(6, factory.getFixIndex());
     }
 }

@@ -51,11 +51,12 @@ public class AnalysisFactory {
 
   public static AnalysisResultSource create(File file) throws IOException {
     String source = readFileToString(file);
-    return createSource(source, 0);
+
+    return createSource(createSignatureList(source));
   }
 
   public static AnalysisResultSource create(String source) {
-    return createSource(source, 0);
+    return createSource(createSignatureList(source));
   }
 
   static String readFileToString(File file) throws IOException {
@@ -69,11 +70,11 @@ public class AnalysisFactory {
     return source.toString();
   }
 
-  static AnalysisResultSource createSource(String source, int index) {
+  // 文節リストを作成
+  private static ArrayList<Signature> createSignatureList(String source) {
+    ArrayList<Signature> signatures = new ArrayList<Signature>();
 
-    // 解析結果(ソースコード)
-    AnalysisResultSource jsarSource = new AnalysisResultSource();
-
+    int index = 0;
     while (true) {
       // 1文節を取得
       Signature signature = new Signature();
@@ -81,18 +82,41 @@ public class AnalysisFactory {
       if (signature.size() == 0) {
         break;
       }
+      signatures.add(signature);
+    }
+
+    return signatures;
+  }
+
+  /**
+   * ソースコードを解析する
+   * 
+   * @param source
+   * @param index
+   * @return
+   */
+  static AnalysisResultSource createSource(ArrayList<Signature> signatures) {
+
+    // 解析結果(ソースコード)
+    AnalysisResultSource jsarSource = new AnalysisResultSource();
+
+    int index = 0;
+    while (signatures.size() > index) {
+
+      Signature signature = signatures.get(index);
+      index++;
 
       // クラス文節だった
       if (signature.contains("class")) {
         AnalysisResultClassCode code = new AnalysisResultClassCode(signature);
         // 1文節を取得
-        Signature brances = new Signature();
-        index = brances.extract(source, index);
+        Signature brances = signatures.get(index);
         if (brances.contains("{") == false) {
           throw new RuntimeException("クラスの開始ブレースがありません");
         }
-        AnalysisResultInBraces inBraces = new AnalysisResultInBraces(createInBrances(source, index));
-        AnalysisResultClass resultClass = new AnalysisResultClass(code, inBraces);
+        AnalysisInBracesFactory factory = new AnalysisInBracesFactory(signatures, index);
+        
+        AnalysisResultClass resultClass = new AnalysisResultClass(code, factory.createInBrances());
         jsarSource.add(resultClass);
       } else {
         jsarSource.add(new AnalysisResultCode(signature.toString()));
@@ -100,27 +124,5 @@ public class AnalysisFactory {
     }
 
     return jsarSource;
-  }
-
-  private static ArrayList<AnalysisResult> createInBrances(String source, int index) {
-
-    ArrayList<AnalysisResult> list = new ArrayList<AnalysisResult>();
-
-    while (true) {
-      // 1文節を取得
-      Signature signature = new Signature();
-      index = signature.extract(source, index);
-
-      if (signature.contains("{")) {
-        AnalysisResultInBraces inBraces = new AnalysisResultInBraces(createInBrances(source, index));
-        list.add(inBraces);
-      } else if (signature.contains("}")) {
-        break;
-      } else {
-        list.add(new AnalysisResultCode(signature.toString()));
-      }
-    }
-
-    return list;
   }
 }

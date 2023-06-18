@@ -1,15 +1,16 @@
 package javasvg;
+
 import java.util.ArrayList;
 import java.util.stream.Stream;
 
 /**
- * {}の中身を表すクラス
+ * ()の中身を表すクラス
  */
-public class AnalysisResultInBraces extends AnalysisResult {
+public class AnalysisResultInParentheses extends AnalysisResult {
 
     private ArrayList<AnalysisResult> list;
 
-    public AnalysisResultInBraces(ArrayList<AnalysisResult> list) {
+    public AnalysisResultInParentheses(ArrayList<AnalysisResult> list) {
         this.list = list;
     }
 
@@ -23,9 +24,5 @@ public class AnalysisResultInBraces extends AnalysisResult {
 
     public String toString() {
         return "{\n" + list.stream().map(AnalysisResult::toString).reduce("", (a, b) -> a + "\n" + b) + "\n}";
-    }
-
-    public Integer size() {
-        return list.size();
     }
 }

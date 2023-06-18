@@ -118,7 +118,8 @@ public class AnalysisFactory {
         
         AnalysisResultClass resultClass = new AnalysisResultClass(code, factory.createInBrances());
         jsarSource.add(resultClass);
-      } else {
+      } 
+      else {
         jsarSource.add(new AnalysisResultCode(signature.toString()));
       }
     }

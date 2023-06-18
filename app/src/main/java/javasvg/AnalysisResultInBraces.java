@@ -46,8 +46,7 @@ public class AnalysisResultInBraces extends AnalysisResult {
                 list.add(AnalysisResultInBraces.create(signatures, index));
             } 
             else if (signature.contains("(")){
-                AnalysisResultInParenthesesFactory factory = new AnalysisResultInParenthesesFactory(signatures, index);
-                list.add(factory.createInParentheses());
+                list.add(AnalysisResultInParentheses.create(signatures, index));
             } else if (signature.contains("}")) {
                 index.increment();
                 break;

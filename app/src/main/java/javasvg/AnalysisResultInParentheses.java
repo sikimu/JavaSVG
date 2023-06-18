@@ -29,4 +29,31 @@ public class AnalysisResultInParentheses extends AnalysisResult {
     public Integer size() {
         return list.size();
     }
+
+    public static AnalysisResultInParentheses create(ArrayList<Signature> signatures, Index index) {
+        ArrayList<AnalysisResult> list = new ArrayList<AnalysisResult>();
+
+        Signature signature = signatures.get(index.get());
+
+        if (signature.contains("(") == false) {
+            throw new IllegalArgumentException("開始括弧がありません");
+        }
+        index.increment();
+
+        while (signatures.size() > index.get()) {
+            signature = signatures.get(index.get());
+
+            if (signature.contains("(")) {
+                list.add(AnalysisResultInParentheses.create(signatures, index));
+            } else if (signature.contains(")")) {
+                index.increment();
+                break;
+            } else {
+                list.add(new AnalysisResultCode(signature.toString()));
+                index.increment();
+            }            
+        }
+
+        return new AnalysisResultInParentheses(list);
+    }    
 }

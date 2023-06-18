@@ -13,8 +13,7 @@ public class AnalysisResultInParenthesesFactoryTest {
     @Test
     public void testCreateInParentheses() {
         ArrayList<Signature> signatures = SignaturesFactory.create("(int a, int b, int c)");
-        AnalysisResultInParenthesesFactory factory = new AnalysisResultInParenthesesFactory(signatures, new Index(0));
-        AnalysisResultInParentheses result = factory.createInParentheses();
+        AnalysisResultInParentheses result = AnalysisResultInParentheses.create(signatures, new Index(0));
 
         assertEquals(1, result.size());
         assertTrue(result.get(0) instanceof AnalysisResultCode);

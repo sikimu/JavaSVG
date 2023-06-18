@@ -6,18 +6,9 @@ import java.util.stream.Stream;
 class Signature {
     private ArrayList<String> wordList;
     
-    Signature() {
+    Signature(String source, Index index) {
+
       wordList = new ArrayList<String>();
-    }
-
-    /**
-     * 1文節を取得
-     * @param source
-     * @param index
-     */
-    void extract(String source, Index index) {
-
-      wordList.clear();
 
       String word = "";
       while (index.get() < source.length()) {

@@ -4,24 +4,27 @@ import java.util.ArrayList;
 
 public class AnalysisResultClass extends AnalysisResult {
 
-    private AnalysisResultClassCode code;
+    final public String name;
 
     final public AnalysisResultInBraces inBraces;
 
     public AnalysisResultClass(ArrayList<Signature> signatures, Index index) {
+
         Signature signature = signatures.get(index.get());
+        this.name = searchName(signature);
         index.increment();
 
-        this.code = new AnalysisResultClassCode(signature);
         this.inBraces = AnalysisResultInBraces.create(signatures, index);
     }
 
-    public String toString() {
-        String result = "class code\n" + code.toString();
-        return result + inBraces.stream().map(AnalysisResult::toString).reduce("", (a, b) -> a + "\n" + b);
-    }
+    private String searchName(Signature signature) {
 
-    public String getName() {
-        return code.getName();
+        //classの後にある単語がクラス名
+        for (int i = 0; i < signature.size(); i++) {
+            if (signature.get(i).equals("class")) {
+                return signature.get(i + 1);
+            }
+        }
+        throw new RuntimeException("class name not found");
     }
 }

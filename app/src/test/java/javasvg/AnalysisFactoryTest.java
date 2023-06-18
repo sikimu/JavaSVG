@@ -21,7 +21,7 @@ public class AnalysisFactoryTest {
 
         assertTrue(arSource.get(0) instanceof AnalysisResultClass);
         AnalysisResultClass arClass = (AnalysisResultClass) arSource.get(0);
-        assertEquals("A", arClass.getName());
+        assertEquals("A", arClass.name);
 
         assertEquals("aaaaaa", arClass.inBraces.get(0).toString());
     }
@@ -33,7 +33,7 @@ public class AnalysisFactoryTest {
 
         assertTrue(arSource.get(0) instanceof AnalysisResultClass);
         AnalysisResultClass arClass = (AnalysisResultClass) arSource.get(0);
-        assertEquals("A", arClass.getName());
+        assertEquals("A", arClass.name);
 
         assertEquals("aaaa", arClass.inBraces.get(0).toString());
 

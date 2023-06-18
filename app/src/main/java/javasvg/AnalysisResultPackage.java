@@ -18,7 +18,7 @@ public class AnalysisResultPackage {
             for(int i = 0; i < source.size(); i++) {
                 if(source.get(i) instanceof AnalysisResultClass) {
                     AnalysisResultClass clazz = (AnalysisResultClass) source.get(i);
-                    classes.add(clazz.getName());
+                    classes.add(clazz.name);
                 }
             }
         }

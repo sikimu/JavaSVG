@@ -26,7 +26,7 @@ class AnalysisInBracesFactory {
                 list.add(factory.createInBrances());
                 index = factory.getFixIndex();
             } 
-            if (signature.contains("(")){
+            else if (signature.contains("(")){
                 AnalysisResultInParenthesesFactory factory = new AnalysisResultInParenthesesFactory(signatures, index);
                 list.add(factory.createInParentheses());
                 index = factory.getFixIndex();

@@ -51,8 +51,7 @@ public class AnalysisFactory {
 
   public static AnalysisResultSource create(File file) throws IOException {
     String source = readFileToString(file);
-
-    return createSource(SignaturesFactory.create(source));
+    return create(source);
   }
 
   public static AnalysisResultSource create(String source) {

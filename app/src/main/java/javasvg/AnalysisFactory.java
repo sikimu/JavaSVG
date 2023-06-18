@@ -114,9 +114,8 @@ public class AnalysisFactory {
         if (brances.contains("{") == false) {
           throw new RuntimeException("クラスの開始ブレースがありません");
         }
-        AnalysisInBracesFactory factory = new AnalysisInBracesFactory(signatures, index);
-        
-        AnalysisResultClass resultClass = new AnalysisResultClass(code, factory.createInBrances());
+
+        AnalysisResultClass resultClass = new AnalysisResultClass(code, AnalysisResultInBraces.create(signatures, index));
         jsarSource.add(resultClass);
       } 
       else {

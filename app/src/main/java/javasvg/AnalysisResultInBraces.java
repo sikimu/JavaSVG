@@ -28,4 +28,35 @@ public class AnalysisResultInBraces extends AnalysisResult {
     public Integer size() {
         return list.size();
     }
+
+    public static AnalysisResultInBraces create(ArrayList<Signature> signatures, Index index) {
+        ArrayList<AnalysisResult> list = new ArrayList<AnalysisResult>();
+
+        Signature signature = signatures.get(index.get());
+
+        if (signature.contains("{") == false) {
+            throw new IllegalArgumentException("開始括弧がありません");
+        }
+        index.increment();
+
+        while (signatures.size() > index.get()) {
+            signature = signatures.get(index.get());
+
+            if (signature.contains("{")) {
+                list.add(AnalysisResultInBraces.create(signatures, index));
+            } 
+            else if (signature.contains("(")){
+                AnalysisResultInParenthesesFactory factory = new AnalysisResultInParenthesesFactory(signatures, index);
+                list.add(factory.createInParentheses());
+            } else if (signature.contains("}")) {
+                index.increment();
+                break;
+            } else {
+                list.add(new AnalysisResultCode(signature.toString()));
+                index.increment();
+            }            
+        }
+
+        return new AnalysisResultInBraces(list);
+    }
 }

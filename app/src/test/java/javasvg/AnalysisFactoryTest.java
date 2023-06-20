@@ -29,16 +29,16 @@ public class AnalysisFactoryTest {
     @Test
     @DisplayName("クラスの読み込みテスト")
     public void testClassCreate2() {
-        AnalysisResultSource arSource = AnalysisFactory.create("public class A{aaaa(int ccc){bbbb}}");
+        AnalysisResultSource arSource = AnalysisFactory.create("public class A{int aaaa(int ccc){bbbb}}");
 
         assertTrue(arSource.get(0) instanceof AnalysisResultClass);
         AnalysisResultClass arClass = (AnalysisResultClass) arSource.get(0);
         assertEquals("A", arClass.name);
 
-        assertEquals("aaaa", arClass.inBraces.get(0).toString());
-
-        assertTrue(arClass.inBraces.get(2) instanceof AnalysisResultInBraces);
-        AnalysisResultInBraces arInBraces = (AnalysisResultInBraces) arClass.inBraces.get(2);
-        assertEquals("bbbb", arInBraces.get(0).toString());
+        assertTrue(arClass.inBraces.get(0) instanceof AnalysisResultMethod);
+        AnalysisResultMethod arMethod = (AnalysisResultMethod) arClass.inBraces.get(0);
+        assertEquals("aaaa", arMethod.name);
+        assertEquals("int ccc", arMethod.arguments.toString());
+        assertEquals("bbbb", arMethod.inBraces.get(0).toString());
     }    
 }

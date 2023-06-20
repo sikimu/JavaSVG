@@ -38,7 +38,7 @@ public class AnalysisResultMethod extends AnalysisResult {
         
         // 引数がある場合
         AnalysisResultCode result = new AnalysisResultCode(signature.toString());
-        if (signatures.get(index.get() + 2).contains(")") == false) {
+        if (signatures.get(index.get()).contains(")") == false) {
             throw new IllegalArgumentException("終了括弧がありません");
         }                
         index.increment();

@@ -8,6 +8,8 @@ public class AnalysisResultMethod extends AnalysisResult {
 
     final public AnalysisResultCode arguments;
 
+    final public AnalysisResultCode arThrows;
+
     final public AnalysisResultInBraces inBraces;
 
     public AnalysisResultMethod(ArrayList<Signature> signatures, Index index) {
@@ -18,7 +20,23 @@ public class AnalysisResultMethod extends AnalysisResult {
 
         arguments = searchArguments(signatures, index);
 
+        arThrows = searchThrows(signatures, index);
+
         this.inBraces = create(signatures, index);
+    }
+
+    // throws部分の取得
+    private AnalysisResultCode searchThrows(ArrayList<Signature> signatures, Index index){
+        
+        Signature signature = signatures.get(index.get());
+        // throwsがある場合のみ
+        if (signatures.get(index.get()).contains("throws") == false) {
+            return new AnalysisResultCode("");
+        }        
+        // throwsがある場合
+        AnalysisResultCode result = new AnalysisResultCode(signature.get(signature.size() - 1));
+        index.increment();
+        return result;
     }
 
     // 引数部分の取得

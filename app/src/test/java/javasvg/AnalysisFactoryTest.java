@@ -28,7 +28,7 @@ public class AnalysisFactoryTest {
 
     @Test
     @DisplayName("クラスの読み込みテスト")
-    public void testClassCreate2() {
+    public void createClass() {
         AnalysisResultSource arSource = AnalysisFactory.create("public class A{int aaaa(int ccc){bbbb}}");
 
         assertTrue(arSource.get(0) instanceof AnalysisResultClass);

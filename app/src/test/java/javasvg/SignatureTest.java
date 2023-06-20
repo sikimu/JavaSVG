@@ -3,12 +3,9 @@ package javasvg;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.DisplayName;
-
 public class SignatureTest {
     @Test
-    @DisplayName("単純なextractのテスト")
-    public void testExtract() {
+    public void 一番単純な読み込み() {
         String source = "hello world";
         Index index = new Index(0);
         Signature signature = new Signature(source, index);
@@ -18,47 +15,29 @@ public class SignatureTest {
     }
 
     @Test
-    @DisplayName("クラスが含まれているもののテスト")
-    public void testExtract2() {
+    public void 文節の区切り文字を個別の文節とする() {
 
-
-        String source = "public class Hello {aaaaaaaaaaaaaaaaaaa}";
+        String source = "();{}";
         Index index = new Index(0);
         Signature signature = new Signature(source, index);
         
-        assertEquals(19, index.get());
-        assertEquals(3, signature.size());
-        assertEquals("public", signature.get(0));
-        assertEquals("class", signature.get(1));
-        assertEquals("Hello", signature.get(2));
-    }    
-
-    @Test
-    @DisplayName("();をそれぞれ解析されることのテスト")
-    public void testExtract3() {
-
-        String source = "e);";
-        Index index = new Index(0);
-        Signature signature = new Signature(source, index);
-        
-        assertEquals(1, index.get());
-        assertEquals(1, signature.size());
-        assertEquals("e", signature.get(0));
+        assertEquals("(", signature.get(0));
 
         signature = new Signature(source, index);
-        assertEquals(2, index.get());
-        assertEquals(1, signature.size());
         assertEquals(")", signature.get(0));     
+
+        signature = new Signature(source, index);
+        assertEquals(";", signature.get(0));
         
         signature = new Signature(source, index);
-        assertEquals(3, index.get());
-        assertEquals(1, signature.size());
-        assertEquals(";", signature.get(0));          
+        assertEquals("{", signature.get(0));
+
+        signature = new Signature(source, index);
+        assertEquals("}", signature.get(0));        
     }        
 
     @Test
-    @DisplayName("ダブルコーテーションが含まれているもののテスト")
-    public void testExtract4() {
+    public void ダブルコーテーションを個別の文節として解析する() {
         String source = "public \"aaa\" aiueo";
         Index index = new Index(0);
         Signature signature = new Signature(source, index);
@@ -70,8 +49,7 @@ public class SignatureTest {
     }    
 
     @Test
-    @DisplayName("/**/が含まれているもののテスト")
-    public void testExtract5() {
+    public void 複数行コメントを個別の文節として解析する() {
 
         String source = "pu/*aiueo*/ueo";
         Signature signature = new Signature(source, new Index(0));

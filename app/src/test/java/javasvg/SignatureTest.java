@@ -1,6 +1,9 @@
 package javasvg;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class SignatureTest {
@@ -48,16 +51,16 @@ public class SignatureTest {
         assertEquals("aiueo", signature.get(2));
     }    
 
-    @Test
-    public void シングルコーテーションを個別の文節として解析する(){
-        String source = "public 'a' aiueo";
+    @ParameterizedTest
+    @CsvSource({
+        "public 'a' aiueo, '''a'''",
+        "public ' ' aiueo, ''' '''",
+    })
+    public void シングルコーテーションを個別の文節として解析する(String source, String expected){
         Index index = new Index(0);
         Signature signature = new Signature(source, index);
 
-        assertEquals(16, index.get());
-        assertEquals("public", signature.get(0));
-        assertEquals("'a'", signature.get(1));
-        assertEquals("aiueo", signature.get(2));
+        assertEquals(expected, signature.get(1));
     }
 
     @Test

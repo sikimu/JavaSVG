@@ -48,6 +48,20 @@ class Signature {
           wordList.add(word);
           word = "";
         }
+        else if(c == '\''){
+          word += c;
+          index.increment();
+          while (index.get() < source.length()) {
+            c = source.charAt(index.get());
+            word += c;
+            if (c == '\'') {
+              break;
+            }
+            index.increment();
+          }
+          wordList.add(word);
+          word = "";
+        }        
         else if (c == ' ' || c == '\n' || c == '\t' || c == '\r') {
           if (word.length() > 0) {
             wordList.add(word);

@@ -49,6 +49,18 @@ public class SignatureTest {
     }    
 
     @Test
+    public void シングルコーテーションを個別の文節として解析する(){
+        String source = "public 'a' aiueo";
+        Index index = new Index(0);
+        Signature signature = new Signature(source, index);
+
+        assertEquals(16, index.get());
+        assertEquals("public", signature.get(0));
+        assertEquals("'a'", signature.get(1));
+        assertEquals("aiueo", signature.get(2));
+    }
+
+    @Test
     public void 複数行コメントを個別の文節として解析する() {
 
         String source = "pu/*aiueo*/ueo";

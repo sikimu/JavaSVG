@@ -69,6 +69,8 @@ public class SignatureTest {
         return Stream.of(
                 Arguments.of("aaa 'a' bbb", "'a'"),
                 Arguments.of("aaa ',' bbb", "','"),
+                Arguments.of("aaa ';' bbb", "';'"),
+                Arguments.of("aaa '\\'' bbb", "'\\''"),
                 Arguments.of("aaa ' ' bbb", "' '")
                 );
     }

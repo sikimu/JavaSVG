@@ -64,6 +64,29 @@ public class SignatureTest {
     }
 
     @Test
+    public void シングルコーテーションを個別の文節として解析する() {
+        String source = "'a',' ','''"; // 0x27
+        Index index = new Index(0);
+        Signature signature = new Signature(source, index);
+
+        assertEquals("'a'", signature.get(0)); 
+        assertEquals("' '", signature.get(2)); 
+    }
+
+    @Test
+    public void カンマをを個別の文節として解析する() {
+        String source = "a,b,c";
+        Index index = new Index(0);
+        Signature signature = new Signature(source, index);
+
+        assertEquals("a", signature.get(0)); 
+        assertEquals(",", signature.get(1)); 
+        assertEquals("b", signature.get(2)); 
+        assertEquals(",", signature.get(3)); 
+        assertEquals("c", signature.get(4)); 
+    }
+
+    @Test
     public void 複数行コメントを個別の文節として解析する() {
 
         String source = "pu/*aiueo*/ueo";

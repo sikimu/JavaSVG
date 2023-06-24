@@ -61,7 +61,14 @@ class Signature {
           }
           wordList.add(word);
           word = "";
-        }        
+        }   
+        else if(c == ','){
+          if(word.length() > 0){
+            wordList.add(word);
+            word = "";
+          }
+          wordList.add(String.valueOf(c));
+        }   
         else if (c == ' ' || c == '\n' || c == '\t' || c == '\r') {
           if (word.length() > 0) {
             wordList.add(word);

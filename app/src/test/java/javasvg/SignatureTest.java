@@ -2,9 +2,15 @@ package javasvg;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Stream;
 
 public class SignatureTest {
     @Test
@@ -12,7 +18,7 @@ public class SignatureTest {
         String source = "hello world";
         Index index = new Index(0);
         Signature signature = new Signature(source, index);
-        
+
         assertEquals(11, index.get());
         assertEquals("hello", signature.get(0));
     }
@@ -23,21 +29,21 @@ public class SignatureTest {
         String source = "();{}";
         Index index = new Index(0);
         Signature signature = new Signature(source, index);
-        
+
         assertEquals("(", signature.get(0));
 
         signature = new Signature(source, index);
-        assertEquals(")", signature.get(0));     
+        assertEquals(")", signature.get(0));
 
         signature = new Signature(source, index);
         assertEquals(";", signature.get(0));
-        
+
         signature = new Signature(source, index);
         assertEquals("{", signature.get(0));
 
         signature = new Signature(source, index);
-        assertEquals("}", signature.get(0));        
-    }        
+        assertEquals("}", signature.get(0));
+    }
 
     @Test
     public void ダブルコーテーションを個別の文節として解析する() {
@@ -49,28 +55,22 @@ public class SignatureTest {
         assertEquals("public", signature.get(0));
         assertEquals("\"aaa\"", signature.get(1));
         assertEquals("aiueo", signature.get(2));
-    }    
+    }
 
     @ParameterizedTest
-    @CsvSource({
-        "public 'a' aiueo, '''a'''",
-        "public ' ' aiueo, ''' '''",
-    })
-    public void シングルコーテーションを個別の文節として解析する(String source, String expected){
+    @MethodSource("シングルコーテーションを個別の文節として解析するパラメータ")
+    void シングルコーテーションを個別の文節として解析する(String source, String expected) {
         Index index = new Index(0);
         Signature signature = new Signature(source, index);
 
         assertEquals(expected, signature.get(1));
     }
-
-    @Test
-    public void シングルコーテーションを個別の文節として解析する() {
-        String source = "'a',' ','''"; // 0x27
-        Index index = new Index(0);
-        Signature signature = new Signature(source, index);
-
-        assertEquals("'a'", signature.get(0)); 
-        assertEquals("' '", signature.get(2)); 
+    static Stream<Arguments> シングルコーテーションを個別の文節として解析するパラメータ() {
+        return Stream.of(
+                Arguments.of("aaa 'a' bbb", "'a'"),
+                Arguments.of("aaa ',' bbb", "','"),
+                Arguments.of("aaa ' ' bbb", "' '")
+                );
     }
 
     @Test
@@ -79,11 +79,11 @@ public class SignatureTest {
         Index index = new Index(0);
         Signature signature = new Signature(source, index);
 
-        assertEquals("a", signature.get(0)); 
-        assertEquals(",", signature.get(1)); 
-        assertEquals("b", signature.get(2)); 
-        assertEquals(",", signature.get(3)); 
-        assertEquals("c", signature.get(4)); 
+        assertEquals("a", signature.get(0));
+        assertEquals(",", signature.get(1));
+        assertEquals("b", signature.get(2));
+        assertEquals(",", signature.get(3));
+        assertEquals("c", signature.get(4));
     }
 
     @Test
@@ -95,5 +95,5 @@ public class SignatureTest {
         assertEquals("pu", signature.get(0));
         assertEquals("/*aiueo*/", signature.get(1));
         assertEquals("ueo", signature.get(2));
-    }   
+    }
 }

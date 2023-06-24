@@ -54,7 +54,12 @@ class Signature {
           while (index.get() < source.length()) {
             c = source.charAt(index.get());
             word += c;
-            if (word.endsWith("\\'") == false && c == '\'') {
+            if (c == '\\') {
+              index.increment();
+              c = source.charAt(index.get());
+              word += c;
+            }
+            else if (c == '\'') {
               break;
             }
             index.increment();

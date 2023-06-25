@@ -15,7 +15,8 @@ class Signature {
         char c = source.charAt(index.get());
 
         // 単語の切れ目だったら区切る
-        if(c == '(' || c == ')' || c == '{' || c == '}' || c == ';'
+        if(source.substring(index.get()).startsWith("/*")
+            || c == '(' || c == ')' || c == '{' || c == '}' || c == ';'
             || c == ' ' || c == '\n' || c == '\t' || c == '\r'
             || c == ','){
           if(word.length() > 0){
@@ -26,11 +27,6 @@ class Signature {
 
 
         if (source.substring(index.get()).startsWith("/*")) {
-          if(word.length() > 0){
-            wordList.add(word);
-            word = "";
-          }
-
           int end = source.substring(index.get()).indexOf("*/", 2);
           wordList.add(source.substring(index.get(), index.get() + end + 2));
           index.add(end + 2);          

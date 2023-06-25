@@ -21,6 +21,11 @@ class Signature {
         }
       }
 
+      // からの文節が作成されました
+      if(index.get() >= source.length()){
+        throw new RuntimeException("からの文節が作成されました");
+      }
+
       // 1文字で文節とするもの
       char firstChar = source.charAt(index.get());
       if (firstChar == '(' || firstChar == ')' || firstChar == '{' || firstChar == '}' || firstChar == ';') {

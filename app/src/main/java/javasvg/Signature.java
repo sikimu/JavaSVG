@@ -10,6 +10,14 @@ class Signature {
 
       wordList = new ArrayList<String>();
 
+      // 1文字で文節とするもの
+      char firstChar = source.charAt(index.get());
+      if (firstChar == '(' || firstChar == ')' || firstChar == '{' || firstChar == '}' || firstChar == ';') {
+        wordList.add(String.valueOf(firstChar));
+        index.increment();
+        return;
+      }
+
       String word = "";
       while (index.get() < source.length()) {
         char c = source.charAt(index.get());
@@ -77,14 +85,8 @@ class Signature {
         }   
         else if (c == ' ' || c == '\n' || c == '\t' || c == '\r') {
           index.increment();
-        } else if (c == '(' || c == ')' || c == '{' || c == '}' || c == ';') {
-          
-          if(wordList.size() == 0){
-            wordList.add(String.valueOf(c));
-            word = "";
-            index.increment();
-          }
-          
+        } 
+        else if (c == '(' || c == ')' || c == '{' || c == '}' || c == ';') {
           break;
         } else {
           word += c;

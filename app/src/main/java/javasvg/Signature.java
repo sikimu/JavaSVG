@@ -22,7 +22,7 @@ class Signature {
 
           int end = source.substring(index.get()).indexOf("*/", 2);
           wordList.add(source.substring(index.get(), index.get() + end + 2));
-          index.add(end + 1);          
+          index.add(end + 2);          
         }
         else if(c == '"'){
           word += c;
@@ -37,6 +37,7 @@ class Signature {
           }
           wordList.add(word);
           word = "";
+          index.increment();
         }
         else if(c == '\''){
           word += c;
@@ -56,6 +57,7 @@ class Signature {
           }
           wordList.add(word);
           word = "";
+          index.increment();
         }   
         else if(c == ','){
           if(word.length() > 0){
@@ -63,12 +65,14 @@ class Signature {
             word = "";
           }
           wordList.add(String.valueOf(c));
+          index.increment();
         }   
         else if (c == ' ' || c == '\n' || c == '\t' || c == '\r') {
           if (word.length() > 0) {
             wordList.add(word);
             word = "";
           }
+          index.increment();
         } else if (c == '(' || c == ')' || c == '{' || c == '}' || c == ';') {
           
           if (word.length() > 0) {
@@ -84,8 +88,8 @@ class Signature {
           break;
         } else {
           word += c;
+          index.increment();
         }
-        index.increment();
       }
 
       if(word.length() > 0){

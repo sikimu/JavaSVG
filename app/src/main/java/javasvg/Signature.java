@@ -14,6 +14,17 @@ class Signature {
       while (index.get() < source.length()) {
         char c = source.charAt(index.get());
 
+        // 単語の切れ目だったら区切る
+        if(c == '(' || c == ')' || c == '{' || c == '}' || c == ';'
+            || c == ' ' || c == '\n' || c == '\t' || c == '\r'
+            || c == ','){
+          if(word.length() > 0){
+            wordList.add(word);
+            word = "";
+          }
+        }
+
+
         if (source.substring(index.get()).startsWith("/*")) {
           if(word.length() > 0){
             wordList.add(word);
@@ -65,26 +76,14 @@ class Signature {
           index.increment();
         }   
         else if(c == ','){
-          if(word.length() > 0){
-            wordList.add(word);
-            word = "";
-          }
           wordList.add(String.valueOf(c));
           index.increment();
         }   
         else if (c == ' ' || c == '\n' || c == '\t' || c == '\r') {
-          if (word.length() > 0) {
-            wordList.add(word);
-            word = "";
-          }
           index.increment();
         } else if (c == '(' || c == ')' || c == '{' || c == '}' || c == ';') {
           
-          if (word.length() > 0) {
-            wordList.add(word);
-            word = "";
-          }
-          else if(word.length() == 0 && wordList.size() == 0){
+          if(wordList.size() == 0){
             wordList.add(String.valueOf(c));
             word = "";
             index.increment();
@@ -101,8 +100,6 @@ class Signature {
         wordList.add(word);
       }
     }
-
-    // 複数行コメント
 
     public boolean contains(String word) {
       return wordList.contains(word);

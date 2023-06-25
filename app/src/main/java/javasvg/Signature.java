@@ -10,17 +10,6 @@ class Signature {
 
       wordList = new ArrayList<String>();
 
-      // 空白や改行は読み飛ばす
-      while(index.get() < source.length()){
-        char c = source.charAt(index.get());
-        if(c == ' ' || c == '\n' || c == '\t' || c == '\r'){
-          index.increment();
-        }
-        else{
-          break;
-        }
-      }
-
       // からの文節が作成されました
       if(index.get() >= source.length()){
         throw new RuntimeException("からの文節が作成されました");

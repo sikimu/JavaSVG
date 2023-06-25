@@ -23,4 +23,11 @@ public class SignaturesFactoryTest {
 
         assertEquals("}", signatures.get(0).get(0));
     }    
+
+    @Test
+    void 始めのスペース() {
+        ArrayList<Signature> signatures = SignaturesFactory.create(" \n aaaaa");
+
+        assertEquals("aaaaa", signatures.get(0).get(0));
+    }    
 }

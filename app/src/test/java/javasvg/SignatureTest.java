@@ -3,13 +3,10 @@ package javasvg;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Stream;
 
 public class SignatureTest {
@@ -45,16 +42,27 @@ public class SignatureTest {
         assertEquals("}", signature.get(0));
     }
 
-    @Test
-    public void ダブルコーテーションを個別の文節として解析する() {
-        String source = "public \"aaa\" aiueo";
+    @ParameterizedTest
+    @MethodSource("個別の文節として解析するパラメータ")
+    public void 個別の文節として解析する(String source, String expected) {
         Index index = new Index(0);
         Signature signature = new Signature(source, index);
 
-        assertEquals(18, index.get());
-        assertEquals("public", signature.get(0));
-        assertEquals("\"aaa\"", signature.get(1));
-        assertEquals("aiueo", signature.get(2));
+        assertEquals(expected, signature.get(1));
+    }
+    static Stream<Arguments> 個別の文節として解析するパラメータ() {
+        return Stream.of(
+                Arguments.of("aaa \"a\" bbb", "\"a\""),
+                Arguments.of("aaa \"\\\"\" bbb", "\"\\\"\""),
+
+                Arguments.of("aaa 'a' bbb", "'a'"),
+                Arguments.of("aaa ',' bbb", "','"),
+                Arguments.of("aaa ';' bbb", "';'"),
+                Arguments.of("aaa '\\'' bbb", "'\\''"),
+                Arguments.of("aaa '\"' bbb", "'\"'"),
+                Arguments.of("aaa '\\\\' bbb", "'\\\\'"),
+                Arguments.of("aaa ' ' bbb", "' '")
+                );        
     }
 
     @ParameterizedTest

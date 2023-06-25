@@ -71,6 +71,7 @@ public class SignatureTest {
                 Arguments.of("aaa ',' bbb", "','"),
                 Arguments.of("aaa ';' bbb", "';'"),
                 Arguments.of("aaa '\\'' bbb", "'\\''"),
+                Arguments.of("aaa '\"' bbb", "'\"'"),
                 Arguments.of("aaa '\\\\' bbb", "'\\\\'"),
                 Arguments.of("aaa ' ' bbb", "' '")
                 );

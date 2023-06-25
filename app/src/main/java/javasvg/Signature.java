@@ -19,20 +19,10 @@ class Signature {
             wordList.add(word);
             word = "";
           }
-          word += "/*";
-          index.add(2);
-          while (index.get() < source.length()) {
-            if (source.substring(index.get()).startsWith("*/")) {
-              break;
-            }            
-            c = source.charAt(index.get());
-            word += c;
-            index.increment();
-          }
-          word += "*/";
-          wordList.add(word);
-          word = "";
-          index.increment();
+
+          int end = source.substring(index.get()).indexOf("*/", 2);
+          wordList.add(source.substring(index.get(), index.get() + end + 2));
+          index.add(end + 1);          
         }
         else if(c == '"'){
           word += c;
@@ -102,6 +92,8 @@ class Signature {
         wordList.add(word);
       }
     }
+
+    // 複数行コメント
 
     public boolean contains(String word) {
       return wordList.contains(word);

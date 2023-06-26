@@ -44,7 +44,8 @@ class Signature {
           wordList.add(source.substring(index.get(), index.get() + end + 2));
           index.add(end + 2);          
         }
-        else if(c == '"'){
+        else if(c == '"' || c == '\''){
+          char quote = c;
           word += c;
           index.increment();
           while (index.get() < source.length()) {
@@ -55,7 +56,7 @@ class Signature {
               c = source.charAt(index.get());
               word += c;
             }
-            else if (c == '"') {
+            else if (c == quote) {
               break;
             }
             index.increment();
@@ -63,27 +64,7 @@ class Signature {
           wordList.add(word);
           word = "";
           index.increment();
-        }
-        else if(c == '\''){
-          word += c;
-          index.increment();
-          while (index.get() < source.length()) {
-            c = source.charAt(index.get());
-            word += c;
-            if (c == '\\') {
-              index.increment();
-              c = source.charAt(index.get());
-              word += c;
-            }
-            else if (c == '\'') {
-              break;
-            }
-            index.increment();
-          }
-          wordList.add(word);
-          word = "";
-          index.increment();
-        }   
+        } 
         else if(c == ','){
           wordList.add(String.valueOf(c));
           index.increment();

@@ -3,6 +3,8 @@ package javasvg;
 import java.util.ArrayList;
 import java.util.stream.Stream;
 
+import javasvg.signature.Signature;
+
 /**
  * ()の中身を表すクラス
  */

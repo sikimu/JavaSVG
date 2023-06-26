@@ -6,6 +6,9 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
+import javasvg.signature.Signature;
+import javasvg.signature.SignaturesFactory;
+
 public class SignaturesFactoryTest {
     @Test
     void 文節と文節の間のスペース() {

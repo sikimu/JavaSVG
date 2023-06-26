@@ -8,6 +8,9 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import javasvg.signature.Signature;
+import javasvg.signature.SignaturesFactory;
+
 public class AnalysisFactory {
 
   public static AnalysisResultPackage createPackage(String folderPath) throws Exception {

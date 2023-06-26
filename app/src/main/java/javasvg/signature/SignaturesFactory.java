@@ -1,9 +1,11 @@
-package javasvg;
+package javasvg.signature;
 import java.util.ArrayList;
 
-class SignaturesFactory {
+import javasvg.Index;
+
+public class SignaturesFactory {
   // 文節リストを作成
-  static ArrayList<Signature> create(String source) {
+  public static ArrayList<Signature> create(String source) {
     
     ArrayList<Signature> signatures = new ArrayList<Signature>();
 

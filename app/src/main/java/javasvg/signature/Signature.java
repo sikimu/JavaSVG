@@ -1,9 +1,11 @@
-package javasvg;
+package javasvg.signature;
 
 import java.util.ArrayList;
 import java.util.stream.Stream;
 
-class Signature {
+import javasvg.Index;
+
+public class Signature {
     private ArrayList<String> wordList;
     
     Signature(String source, Index index) {

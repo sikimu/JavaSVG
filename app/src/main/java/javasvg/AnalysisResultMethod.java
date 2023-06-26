@@ -2,6 +2,8 @@ package javasvg;
 
 import java.util.ArrayList;
 
+import javasvg.signature.Signature;
+
 public class AnalysisResultMethod extends AnalysisResult {
 
     final public String name;

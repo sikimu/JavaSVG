@@ -1,16 +1,18 @@
 package javasvg.signature;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Stream;
 
 import javasvg.Index;
 
 public class Signature {
-    private ArrayList<String> wordList;
+    final private List<String> wordList;
     
     Signature(String source, Index index) {
 
-      wordList = new ArrayList<String>();
+      ArrayList<String> list = new ArrayList<String>();
 
       // からの文節が作成されました
       if(index.get() >= source.length()){
@@ -20,8 +22,10 @@ public class Signature {
       // 1文字で文節とするもの
       char firstChar = source.charAt(index.get());
       if (firstChar == '(' || firstChar == ')' || firstChar == '{' || firstChar == '}' || firstChar == ';') {
-        wordList.add(String.valueOf(firstChar));
+        list.add(String.valueOf(firstChar));
         index.increment();
+
+        wordList = Collections.unmodifiableList(list);
         return;
       }
 
@@ -35,7 +39,7 @@ public class Signature {
             || c == ' ' || c == '\n' || c == '\t' || c == '\r'
             || c == ','){
           if(word.length() > 0){
-            wordList.add(word);
+            list.add(word);
             word = "";
           }
         }
@@ -43,7 +47,7 @@ public class Signature {
 
         if (source.substring(index.get()).startsWith("/*")) {
           int end = source.substring(index.get()).indexOf("*/", 2);
-          wordList.add(source.substring(index.get(), index.get() + end + 2));
+          list.add(source.substring(index.get(), index.get() + end + 2));
           index.add(end + 2);          
         }
         else if(c == '"' || c == '\''){
@@ -63,12 +67,12 @@ public class Signature {
             }
             index.increment();
           }
-          wordList.add(word);
+          list.add(word);
           word = "";
           index.increment();
         } 
         else if(c == ','){
-          wordList.add(String.valueOf(c));
+          list.add(String.valueOf(c));
           index.increment();
         }   
         else if (c == ' ' || c == '\n' || c == '\t' || c == '\r') {
@@ -83,8 +87,10 @@ public class Signature {
       }
 
       if(word.length() > 0){
-        wordList.add(word);
+        list.add(word);
       }
+
+      wordList = Collections.unmodifiableList(list);
     }
 
     public boolean contains(String word) {

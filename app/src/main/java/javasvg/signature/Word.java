@@ -10,10 +10,18 @@ public class Word {
 
     public enum Type{
         FREE, // 自由語
+        CLASS, // class
     }
 
     public Word(String word) {
         this.word = word;
-        this.type = Type.FREE;
+
+        // 単語の種類を判定する
+        if(word.equals("class")){
+            type = Type.CLASS;
+        }
+        else{
+            type = Type.FREE;
+        }
     }
 }

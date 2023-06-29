@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javasvg.Index;
+import javasvg.signature.Word.Type;
 
 public class Signature {
     final private List<String> stringList;
@@ -99,6 +100,10 @@ public class Signature {
 
     public boolean contains(String word) {
       return stringList.contains(word);
+    }
+
+    public boolean contains(Type type) {
+      return wordList.stream().anyMatch(w -> w.type == type);
     }
 
     @Override

@@ -88,7 +88,7 @@ public class SignatureTest {
     }
 
     @Test
-    public void カンマをを個別の文節として解析する() {
+    public void カンマを個別の単語として解析する() {
         String source = "a,b,c";
         Index index = new Index(0);
         Signature signature = new Signature(source, index);

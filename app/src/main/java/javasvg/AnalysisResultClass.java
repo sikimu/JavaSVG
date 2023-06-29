@@ -3,6 +3,7 @@ package javasvg;
 import java.util.ArrayList;
 
 import javasvg.signature.Signature;
+import javasvg.signature.Word;
 
 public class AnalysisResultClass extends AnalysisResult {
 
@@ -73,18 +74,18 @@ public class AnalysisResultClass extends AnalysisResult {
         Signature signature1 = signatures.get(index.get());
         Signature signature2 = signatures.get(index.get() + 1);
 
-        if(signature1.contains("void") == false
-        && signature1.contains("int") == false
-        && signature1.contains("String") == false
-        && signature1.contains("double") == false
-        && signature1.contains("boolean") == false
-        && signature1.contains("char") == false
-        && signature1.contains("float") == false
-        && signature1.contains("long") == false
-        && signature1.contains("byte") == false
-        && signature1.contains("short") == false
-        && signature1.contains("Object") == false
-        && signature1.contains("ArrayList") == false){
+        if(signature1.contains(Word.Type.VOID) == false
+        && signature1.contains(Word.Type.INT) == false
+        && signature1.contains(Word.Type.STRING) == false
+        && signature1.contains(Word.Type.DOUBLE) == false
+        && signature1.contains(Word.Type.BOOLEAN) == false
+        && signature1.contains(Word.Type.CHAR) == false
+        && signature1.contains(Word.Type.FLOAT) == false
+        && signature1.contains(Word.Type.LONG) == false
+        && signature1.contains(Word.Type.BYTE) == false
+        && signature1.contains(Word.Type.SHORT) == false
+        && signature1.contains(Word.Type.OBJECT) == false
+        && signature1.contains(Word.Type.ARRAY_LIST) == false){
             return false;
         }
 

@@ -3,12 +3,14 @@ package javasvg.signature;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javasvg.Index;
 
 public class Signature {
-    final private List<String> wordList;
+    final private List<String> stringList;
+    final private List<Word> wordList;
     
     Signature(String source, Index index) {
 
@@ -25,7 +27,8 @@ public class Signature {
         list.add(String.valueOf(firstChar));
         index.increment();
 
-        wordList = Collections.unmodifiableList(list);
+        stringList = Collections.unmodifiableList(list);
+        wordList = Collections.unmodifiableList(list.stream().map(Word::new).collect(Collectors.toList()));
         return;
       }
 
@@ -90,19 +93,20 @@ public class Signature {
         list.add(word);
       }
 
-      wordList = Collections.unmodifiableList(list);
+      stringList = Collections.unmodifiableList(list);
+      wordList = Collections.unmodifiableList(list.stream().map(Word::new).collect(Collectors.toList()));
     }
 
     public boolean contains(String word) {
-      return wordList.contains(word);
+      return stringList.contains(word);
     }
 
     @Override
     public String toString() {
       StringBuilder sb = new StringBuilder();
-      for (int i = 0; i < wordList.size(); i++) {
-        sb.append(wordList.get(i));
-        if (i < wordList.size() - 1) {
+      for (int i = 0; i < stringList.size(); i++) {
+        sb.append(stringList.get(i));
+        if (i < stringList.size() - 1) {
           sb.append(" ");
         }
       }
@@ -110,14 +114,14 @@ public class Signature {
     }
 
     public String get(int i) {
-      return wordList.get(i);
+      return stringList.get(i);
     }
 
     public int size() {
-      return wordList.size();
+      return stringList.size();
     }
 
     public Stream<String> stream() {
-      return wordList.stream();
+      return stringList.stream();
     }
   }

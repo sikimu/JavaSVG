@@ -110,4 +110,15 @@ public class SignatureTest {
         assertEquals("/*aiueo*/", signature.get(1));
         assertEquals("ueo", signature.get(2));
     }
+
+    @Test
+    public void コメントを個別の文節として解析する(){
+            
+            String source = "pu//aiueo\r\nueo";
+            Signature signature = new Signature(source, new Index(0));
+    
+            assertEquals("pu", signature.get(0));
+            assertEquals("//aiueo", signature.get(1));
+            assertEquals("ueo", signature.get(2));
+        }
 }

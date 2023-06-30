@@ -39,6 +39,7 @@ public class Signature {
 
         // 単語の切れ目だったら区切る
         if(source.substring(index.get()).startsWith("/*")
+            || source.substring(index.get()).startsWith("//")
             || c == '(' || c == ')' || c == '{' || c == '}' || c == ';'
             || c == ' ' || c == '\n' || c == '\t' || c == '\r'
             || c == ','){
@@ -53,6 +54,19 @@ public class Signature {
           int end = source.substring(index.get()).indexOf("*/", 2);
           list.add(source.substring(index.get(), index.get() + end + 2));
           index.add(end + 2);          
+        }
+        else if(source.substring(index.get()).startsWith("//")){
+          while (index.get() < source.length()) {
+            c = source.charAt(index.get());
+            if (c == '\n' || c == '\r') {
+              break;
+            }
+            word += c;
+            index.increment();
+          }
+          list.add(word);
+          word = "";
+          index.increment();          
         }
         else if(c == '"' || c == '\''){
           char quote = c;

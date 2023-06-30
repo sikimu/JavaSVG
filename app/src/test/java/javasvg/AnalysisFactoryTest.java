@@ -43,6 +43,21 @@ public class AnalysisFactoryTest {
     }    
 
     @Test
+    public void 途中にコメントの混じったクラスの読み込み() {
+        AnalysisResultSource arSource = AnalysisFactory.create("public class A//aiueo\n{int aaaa(int ccc){bbbb}}");
+
+        assertTrue(arSource.get(0) instanceof AnalysisResultClass);
+        AnalysisResultClass arClass = (AnalysisResultClass) arSource.get(0);
+        assertEquals("A", arClass.name);
+
+        assertTrue(arClass.inBraces.get(0) instanceof AnalysisResultMethod);
+        AnalysisResultMethod arMethod = (AnalysisResultMethod) arClass.inBraces.get(0);
+        assertEquals("aaaa", arMethod.name);
+        assertEquals("int ccc", arMethod.arguments.toString());
+        assertEquals("bbbb", arMethod.inBraces.get(0).toString());
+    }        
+
+    @Test
     public void スロー付きメソッドのあるクラスの読み込み(){
         AnalysisResultSource arSource = AnalysisFactory.create("public class A{int aaaa(int ccc) throws Exception{bbbb}}");
 

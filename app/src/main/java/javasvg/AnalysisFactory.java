@@ -10,7 +10,6 @@ import java.util.List;
 
 import javasvg.signature.Signature;
 import javasvg.signature.SignaturesFactory;
-import javasvg.signature.Word;
 
 public class AnalysisFactory {
 
@@ -91,7 +90,7 @@ public class AnalysisFactory {
       Signature signature = signatures.get(index.get());
 
       // クラス文節だった
-      if (signature.contains(Word.Type.CLASS)) {
+      if (signature.contains("class")) {
         AnalysisResultClass resultClass = new AnalysisResultClass(signatures, index);
         jsarSource.add(resultClass);
       } 

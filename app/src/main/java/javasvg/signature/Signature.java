@@ -3,15 +3,12 @@ package javasvg.signature;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javasvg.Index;
-import javasvg.signature.Word.Type;
 
 public class Signature {
     final private List<String> stringList;
-    final private List<Word> wordList;
     final private List<String> commentList;
     
     Signature(String source, Index index) {
@@ -31,7 +28,6 @@ public class Signature {
         index.increment();
 
         stringList = Collections.unmodifiableList(list);
-        wordList = Collections.unmodifiableList(list.stream().map(Word::new).collect(Collectors.toList()));
         commentList = Collections.unmodifiableList(tempCommentList);
         return;
       }
@@ -112,16 +108,11 @@ public class Signature {
       }
 
       stringList = Collections.unmodifiableList(list);
-      wordList = Collections.unmodifiableList(list.stream().map(Word::new).collect(Collectors.toList()));
       commentList = Collections.unmodifiableList(tempCommentList);
     }
 
     public boolean contains(String word) {
       return stringList.contains(word);
-    }
-
-    public boolean contains(Type type) {
-      return wordList.stream().anyMatch(w -> w.type == type);
     }
 
     @Override

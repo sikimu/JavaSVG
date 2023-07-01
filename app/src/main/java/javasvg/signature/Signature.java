@@ -12,10 +12,12 @@ import javasvg.signature.Word.Type;
 public class Signature {
     final private List<String> stringList;
     final private List<Word> wordList;
+    final private List<String> commentList;
     
     Signature(String source, Index index) {
 
       ArrayList<String> list = new ArrayList<String>();
+      ArrayList<String> tempCommentList = new ArrayList<String>();
 
       // からの文節が作成されました
       if(index.get() >= source.length()){
@@ -30,6 +32,7 @@ public class Signature {
 
         stringList = Collections.unmodifiableList(list);
         wordList = Collections.unmodifiableList(list.stream().map(Word::new).collect(Collectors.toList()));
+        commentList = Collections.unmodifiableList(tempCommentList);
         return;
       }
 
@@ -52,7 +55,7 @@ public class Signature {
 
         if (source.substring(index.get()).startsWith("/*")) {
           int end = source.substring(index.get()).indexOf("*/", 2);
-          list.add(source.substring(index.get(), index.get() + end + 2));
+          tempCommentList.add(source.substring(index.get(), index.get() + end + 2));
           index.add(end + 2);          
         }
         else if(source.substring(index.get()).startsWith("//")){
@@ -64,7 +67,7 @@ public class Signature {
             word += c;
             index.increment();
           }
-          list.add(word);
+          tempCommentList.add(word);
           word = "";
           index.increment();          
         }
@@ -110,6 +113,7 @@ public class Signature {
 
       stringList = Collections.unmodifiableList(list);
       wordList = Collections.unmodifiableList(list.stream().map(Word::new).collect(Collectors.toList()));
+      commentList = Collections.unmodifiableList(tempCommentList);
     }
 
     public boolean contains(String word) {
@@ -142,5 +146,9 @@ public class Signature {
 
     public Stream<String> stream() {
       return stringList.stream();
+    }
+
+    public Object getComment(int i) {
+      return commentList.get(i);
     }
   }

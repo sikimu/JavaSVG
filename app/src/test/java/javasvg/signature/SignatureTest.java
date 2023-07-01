@@ -107,8 +107,8 @@ public class SignatureTest {
         Signature signature = new Signature(source, new Index(0));
 
         assertEquals("pu", signature.get(0));
-        assertEquals("/*aiueo*/", signature.get(1));
-        assertEquals("ueo", signature.get(2));
+        assertEquals("ueo", signature.get(1));
+        assertEquals("/*aiueo*/", signature.getComment(0));
     }
 
     @Test
@@ -118,7 +118,7 @@ public class SignatureTest {
             Signature signature = new Signature(source, new Index(0));
     
             assertEquals("pu", signature.get(0));
-            assertEquals("//aiueo", signature.get(1));
-            assertEquals("ueo", signature.get(2));
+            assertEquals("ueo", signature.get(1));
+            assertEquals("//aiueo", signature.getComment(0));
         }
 }

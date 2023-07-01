@@ -21,7 +21,7 @@ public class SignaturesFactory {
       // 1文節の後のスペースを飛ばす
       while (index.get() < source.length()) {
         char c = source.charAt(index.get());
-        if (c == ' ' || c == '\n' || c == '\t' || c == '\r') {
+        if (c == ' ' || c == '\n' || c == '\t' || c == '\r' || c == ';') {
           index.increment();
         }
         else {

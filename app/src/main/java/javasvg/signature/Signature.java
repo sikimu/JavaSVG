@@ -39,7 +39,7 @@ public class Signature {
         // 単語の切れ目だったら区切る
         if(source.substring(index.get()).startsWith("/*")
             || source.substring(index.get()).startsWith("//")
-            || c == '(' || c == ')' || c == '{' || c == '}' || c == ';'
+            || c == '(' || c == ')' || c == '{' || c == '}'
             || c == ' ' || c == '\n' || c == '\t' || c == '\r'
             || c == ','){
           if(word.length() > 0){

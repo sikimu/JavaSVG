@@ -13,15 +13,13 @@ import javasvg.signature.SignaturesFactory;
 public class AnalysisInBracesTest {
 
     @Test
-    public void testCreateInBraces() {
+    public void 基本テスト() {
         ArrayList<Signature> signatures = SignaturesFactory.create("{int a; int b;}public int c;");
 
         AnalysisResultInBraces result = AnalysisResultInBraces.create(signatures, new Index(0));
 
-        assertEquals(4, result.size());
+        assertEquals(2, result.size());
         assertTrue(result.get(0) instanceof AnalysisResultCode);
         assertTrue(result.get(1) instanceof AnalysisResultCode);
-        assertTrue(result.get(2) instanceof AnalysisResultCode);
-        assertTrue(result.get(3) instanceof AnalysisResultCode);
     }
 }

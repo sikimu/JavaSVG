@@ -90,7 +90,11 @@ public class AnalysisResultMethod extends AnalysisResult {
             else if (signature.contains("}")) {
                 index.increment();
                 break;
-            } else {
+            } 
+            else if (signature.get(0).equals("if")){
+                list.add(new AnalysisResultIf(signatures, index));
+            }
+            else {
                 list.add(new AnalysisResultCode(signature.toString()));
                 index.increment();
             }            

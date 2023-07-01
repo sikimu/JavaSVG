@@ -1,6 +1,7 @@
 package javasvg;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 
@@ -18,5 +19,17 @@ public class AnalysisResultMethodTest {
 
         assertEquals("a", result.name);
         assertEquals("int b", result.arguments.toString());
+    }
+
+    @Test
+    public void if文の入ったメソッドの解析() {
+        ArrayList<Signature> signatures = SignaturesFactory.create("public int a(int b){if(b == 0){return 0;}return 1;}");
+        AnalysisResultMethod result = new AnalysisResultMethod(signatures, new Index(0));
+
+        assertEquals("a", result.name);
+        assertEquals("int b", result.arguments.toString());
+        //メソッドの1コマンド目はAnalysisResultIfのインスタンス
+        assertTrue(result.inBraces.get(0) instanceof AnalysisResultIf);
+        
     }
 }

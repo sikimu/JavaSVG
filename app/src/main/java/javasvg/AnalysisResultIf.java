@@ -6,13 +6,23 @@ import javasvg.signature.Signature;
 
 public class AnalysisResultIf extends AnalysisResult {
 
-    public AnalysisResultCode expression;
+    final public AnalysisResultCode expression;
+
+    final public AnalysisResult statement; 
 
     public AnalysisResultIf(ArrayList<Signature> signatures, Index index) {
 
         index.add(2);// if(を飛ばす
-        Signature signature = signatures.get(index.get());
-        this.expression = new AnalysisResultCode(signature.get(0));
-        index.increment();
+        this.expression = new AnalysisResultCode(signatures.get(index.get()).get(0));
+        index.add(2);// )を飛ばす
+        //次の処理が{なら
+        if (signatures.get(index.get()).get(0).equals("{")) {
+            this.statement = AnalysisResultInBraces.create(signatures, index);
+        }
+        //1行解析
+        else{
+            this.statement = new AnalysisResultCode(signatures.get(index.get()).get(0));
+            index.increment();
+        }
     }
 }

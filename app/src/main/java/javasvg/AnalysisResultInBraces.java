@@ -47,9 +47,7 @@ public class AnalysisResultInBraces extends AnalysisResult {
             if (signature.contains("{")) {
                 list.add(AnalysisResultInBraces.create(signatures, index));
             } 
-            else if (signature.contains("(")){
-                list.add(AnalysisResultInParentheses.create(signatures, index));
-            } else if (signature.contains("}")) {
+            else if (signature.contains("}")) {
                 index.increment();
                 break;
             } else {

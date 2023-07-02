@@ -13,7 +13,7 @@ public class AnalysisResultIf extends AnalysisResult {
     public AnalysisResultIf(ArrayList<Phrase> signatures, Index index) {
 
         index.add(2);// if(を飛ばす
-        this.expression = new AnalysisResultCode(signatures.get(index.get()).get(0));
+        this.expression = new AnalysisResultCode(signatures.get(index.get()));
         index.add(2);// )を飛ばす
         //次の処理が{なら
         if (signatures.get(index.get()).get(0).equals("{")) {
@@ -21,7 +21,7 @@ public class AnalysisResultIf extends AnalysisResult {
         }
         //1行解析
         else{
-            this.statement = new AnalysisResultCode(signatures.get(index.get()).get(0));
+            this.statement = new AnalysisResultCode(signatures.get(index.get()));
             index.increment();
         }
     }

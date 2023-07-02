@@ -53,7 +53,7 @@ public class AnalysisResultMethod extends AnalysisResult {
         index.increment();
         // 引数がない場合
         if (phrase.contains(")")) {
-            return new AnalysisResultCode("");
+            return null;
         }   
         
         // 引数がある場合

@@ -1,4 +1,4 @@
-package javasvg.phrase;
+package jp.co.javanalysis.phrase;
 import java.util.ArrayList;
 
 import javasvg.Index;

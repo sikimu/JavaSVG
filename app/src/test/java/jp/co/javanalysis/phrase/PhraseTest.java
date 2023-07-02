@@ -1,4 +1,4 @@
-package javasvg.phrase;
+package jp.co.javanalysis.phrase;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

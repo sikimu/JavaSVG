@@ -2,7 +2,7 @@ package javasvg;
 import java.util.ArrayList;
 import java.util.stream.Stream;
 
-import javasvg.phrase.Phrase;
+import jp.co.javanalysis.phrase.Phrase;
 
 /**
  * {}の中身を表すクラス

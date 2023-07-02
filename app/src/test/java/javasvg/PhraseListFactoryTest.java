@@ -6,8 +6,8 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
-import javasvg.phrase.Phrase;
-import javasvg.phrase.PhraseListFactory;
+import jp.co.javanalysis.phrase.Phrase;
+import jp.co.javanalysis.phrase.PhraseListFactory;
 
 public class PhraseListFactoryTest {
     @Test

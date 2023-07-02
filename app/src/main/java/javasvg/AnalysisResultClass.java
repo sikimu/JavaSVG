@@ -2,7 +2,7 @@ package javasvg;
 
 import java.util.ArrayList;
 
-import javasvg.phrase.Phrase;
+import jp.co.javanalysis.phrase.Phrase;
 
 public class AnalysisResultClass extends AnalysisResult {
 

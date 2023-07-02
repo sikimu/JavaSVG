@@ -87,15 +87,15 @@ public class AnalysisFactory {
     Index index = new Index(0);
     while (signatures.size() > index.get()) {
 
-      Phrase signature = signatures.get(index.get());
+      Phrase phrase = signatures.get(index.get());
 
       // クラス文節だった
-      if (signature.contains("class")) {
+      if (phrase.contains("class")) {
         AnalysisResultClass resultClass = new AnalysisResultClass(signatures, index);
         jsarSource.add(resultClass);
       } 
       else {
-        jsarSource.add(new AnalysisResultCode(signature.toString()));
+        jsarSource.add(new AnalysisResultCode(phrase));
         index.increment();
       }
     }

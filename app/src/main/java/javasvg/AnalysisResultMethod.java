@@ -49,15 +49,15 @@ public class AnalysisResultMethod extends AnalysisResult {
         }
         index.increment();
         
-        Phrase signature = signatures.get(index.get());
+        Phrase phrase = signatures.get(index.get());
         index.increment();
         // 引数がない場合
-        if (signature.contains(")")) {
+        if (phrase.contains(")")) {
             return new AnalysisResultCode("");
         }   
         
         // 引数がある場合
-        AnalysisResultCode result = new AnalysisResultCode(signature.toString());
+        AnalysisResultCode result = new AnalysisResultCode(phrase);
         if (signatures.get(index.get()).contains(")") == false) {
             throw new IllegalArgumentException("終了括弧がありません");
         }                
@@ -74,28 +74,28 @@ public class AnalysisResultMethod extends AnalysisResult {
         
         ArrayList<AnalysisResult> list = new ArrayList<AnalysisResult>();
 
-        Phrase signature = signatures.get(index.get());
+        Phrase phrase = signatures.get(index.get());
 
-        if (signature.contains("{") == false) {
+        if (phrase.contains("{") == false) {
             throw new IllegalArgumentException("開始括弧がありません");
         }
         index.increment();
 
         while (signatures.size() > index.get()) {
-            signature = signatures.get(index.get());
+            phrase = signatures.get(index.get());
 
-            if (signature.contains("{")) {
+            if (phrase.contains("{")) {
                 list.add(AnalysisResultInBraces.create(signatures, index));
             } 
-            else if (signature.contains("}")) {
+            else if (phrase.contains("}")) {
                 index.increment();
                 break;
             } 
-            else if (signature.get(0).equals("if")){
+            else if (phrase.get(0).equals("if")){
                 list.add(new AnalysisResultIf(signatures, index));
             }
             else {
-                list.add(new AnalysisResultCode(signature.toString()));
+                list.add(new AnalysisResultCode(phrase));
                 index.increment();
             }            
         }

@@ -34,27 +34,27 @@ public class AnalysisResultClass extends AnalysisResult {
         
         ArrayList<AnalysisResult> list = new ArrayList<AnalysisResult>();
 
-        Phrase signature = signatures.get(index.get());
+        Phrase phrase = signatures.get(index.get());
 
-        if (signature.contains("{") == false) {
+        if (phrase.contains("{") == false) {
             throw new IllegalArgumentException("開始括弧がありません");
         }
         index.increment();
 
         while (signatures.size() > index.get()) {
-            signature = signatures.get(index.get());
+            phrase = signatures.get(index.get());
 
             if (isMethod(signatures, index)) {
                 list.add(new AnalysisResultMethod(signatures, index));
             } 
-            else if (signature.contains("{")) {
+            else if (phrase.contains("{")) {
                 list.add(AnalysisResultInBraces.create(signatures, index));
             } 
-            else if (signature.contains("}")) {
+            else if (phrase.contains("}")) {
                 index.increment();
                 break;
             } else {
-                list.add(new AnalysisResultCode(signature.toString()));
+                list.add(new AnalysisResultCode(phrase));
                 index.increment();
             }            
         }

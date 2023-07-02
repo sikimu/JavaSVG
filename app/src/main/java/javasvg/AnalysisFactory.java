@@ -8,8 +8,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import javasvg.signature.Signature;
-import javasvg.signature.SignaturesFactory;
+import javasvg.phrase.Phrase;
+import javasvg.phrase.PhraseListFactory;
 
 public class AnalysisFactory {
 
@@ -58,7 +58,7 @@ public class AnalysisFactory {
   }
 
   public static AnalysisResultSource create(String source) {
-    return createSource(SignaturesFactory.create(source));
+    return createSource(PhraseListFactory.create(source));
   }
 
   static String readFileToString(File file) throws IOException {
@@ -79,7 +79,7 @@ public class AnalysisFactory {
    * @param index
    * @return
    */
-  static AnalysisResultSource createSource(ArrayList<Signature> signatures) {
+  static AnalysisResultSource createSource(ArrayList<Phrase> signatures) {
 
     // 解析結果(ソースコード)
     AnalysisResultSource jsarSource = new AnalysisResultSource();
@@ -87,7 +87,7 @@ public class AnalysisFactory {
     Index index = new Index(0);
     while (signatures.size() > index.get()) {
 
-      Signature signature = signatures.get(index.get());
+      Phrase signature = signatures.get(index.get());
 
       // クラス文節だった
       if (signature.contains("class")) {

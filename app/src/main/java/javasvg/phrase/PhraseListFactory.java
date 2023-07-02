@@ -1,13 +1,13 @@
-package javasvg.signature;
+package javasvg.phrase;
 import java.util.ArrayList;
 
 import javasvg.Index;
 
-public class SignaturesFactory {
+public class PhraseListFactory {
   // 文節リストを作成
-  public static ArrayList<Signature> create(String source) {
+  public static ArrayList<Phrase> create(String source) {
     
-    ArrayList<Signature> signatures = new ArrayList<Signature>();
+    ArrayList<Phrase> signatures = new ArrayList<Phrase>();
 
     source = source.trim();
 
@@ -15,7 +15,7 @@ public class SignaturesFactory {
     while (index.get() < source.length()) {
 
       // 1文節を取得
-      Signature signature = new Signature(source, index);
+      Phrase signature = new Phrase(source, index);
       signatures.add(signature);
 
       // 1文節の後のスペースを飛ばす

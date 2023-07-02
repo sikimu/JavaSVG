@@ -1,4 +1,4 @@
-package javasvg.signature;
+package javasvg.phrase;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -7,11 +7,11 @@ import java.util.stream.Stream;
 
 import javasvg.Index;
 
-public class Signature {
+public class Phrase {
     final private List<String> stringList;
     final private List<String> commentList;
     
-    Signature(String source, Index index) {
+    Phrase(String source, Index index) {
 
       ArrayList<String> list = new ArrayList<String>();
       ArrayList<String> tempCommentList = new ArrayList<String>();

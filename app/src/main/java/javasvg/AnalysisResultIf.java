@@ -2,7 +2,7 @@ package javasvg;
 
 import java.util.ArrayList;
 
-import javasvg.signature.Signature;
+import javasvg.phrase.Phrase;
 
 public class AnalysisResultIf extends AnalysisResult {
 
@@ -10,7 +10,7 @@ public class AnalysisResultIf extends AnalysisResult {
 
     final public AnalysisResult statement; 
 
-    public AnalysisResultIf(ArrayList<Signature> signatures, Index index) {
+    public AnalysisResultIf(ArrayList<Phrase> signatures, Index index) {
 
         index.add(2);// if(を飛ばす
         this.expression = new AnalysisResultCode(signatures.get(index.get()).get(0));

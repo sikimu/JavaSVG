@@ -6,13 +6,13 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
-import javasvg.signature.Signature;
-import javasvg.signature.SignaturesFactory;
+import javasvg.phrase.Phrase;
+import javasvg.phrase.PhraseListFactory;
 
-public class SignaturesFactoryTest {
+public class PhraseListFactoryTest {
     @Test
     void 文節と文節の間のスペース() {
-        ArrayList<Signature> signatures = SignaturesFactory.create("() {}");
+        ArrayList<Phrase> signatures = PhraseListFactory.create("() {}");
 
         assertEquals("(", signatures.get(0).get(0));
         assertEquals(")", signatures.get(1).get(0));
@@ -22,14 +22,14 @@ public class SignaturesFactoryTest {
 
     @Test
     void 最後の改行が2連続() {
-        ArrayList<Signature> signatures = SignaturesFactory.create("}\n\n");
+        ArrayList<Phrase> signatures = PhraseListFactory.create("}\n\n");
 
         assertEquals("}", signatures.get(0).get(0));
     }    
 
     @Test
     void 始めのスペース() {
-        ArrayList<Signature> signatures = SignaturesFactory.create(" \n aaaaa");
+        ArrayList<Phrase> signatures = PhraseListFactory.create(" \n aaaaa");
 
         assertEquals("aaaaa", signatures.get(0).get(0));
     }    

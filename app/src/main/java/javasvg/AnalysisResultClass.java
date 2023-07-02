@@ -2,7 +2,7 @@ package javasvg;
 
 import java.util.ArrayList;
 
-import javasvg.signature.Signature;
+import javasvg.phrase.Phrase;
 
 public class AnalysisResultClass extends AnalysisResult {
 
@@ -10,16 +10,16 @@ public class AnalysisResultClass extends AnalysisResult {
 
     final public AnalysisResultInBraces inBraces;
 
-    public AnalysisResultClass(ArrayList<Signature> signatures, Index index) {
+    public AnalysisResultClass(ArrayList<Phrase> signatures, Index index) {
 
-        Signature signature = signatures.get(index.get());
+        Phrase signature = signatures.get(index.get());
         this.name = searchName(signature);
         index.increment();
 
         this.inBraces = create(signatures, index);
     }
 
-    private String searchName(Signature signature) {
+    private String searchName(Phrase signature) {
 
         //classの後にある単語がクラス名
         for (int i = 0; i < signature.size(); i++) {
@@ -30,11 +30,11 @@ public class AnalysisResultClass extends AnalysisResult {
         throw new RuntimeException("class name not found");
     }
 
-    private AnalysisResultInBraces create(ArrayList<Signature> signatures, Index index){
+    private AnalysisResultInBraces create(ArrayList<Phrase> signatures, Index index){
         
         ArrayList<AnalysisResult> list = new ArrayList<AnalysisResult>();
 
-        Signature signature = signatures.get(index.get());
+        Phrase signature = signatures.get(index.get());
 
         if (signature.contains("{") == false) {
             throw new IllegalArgumentException("開始括弧がありません");
@@ -62,14 +62,14 @@ public class AnalysisResultClass extends AnalysisResult {
         return new AnalysisResultInBraces(list);
     }
 
-    private boolean isMethod(ArrayList<Signature> signatures, Index index) {
+    private boolean isMethod(ArrayList<Phrase> signatures, Index index) {
 
         if (signatures.size() <= index.get() + 1) {
             return false;
         }
 
-        Signature signature1 = signatures.get(index.get());
-        Signature signature2 = signatures.get(index.get() + 1);
+        Phrase signature1 = signatures.get(index.get());
+        Phrase signature2 = signatures.get(index.get() + 1);
 
         if(signature1.contains("void") == false
         && signature1.contains("int") == false

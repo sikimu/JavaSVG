@@ -1,4 +1,4 @@
-package javasvg.signature;
+package javasvg.phrase;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -11,12 +11,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.stream.Stream;
 
-public class SignatureTest {
+public class PhraseTest {
     @Test
     public void 一番単純な読み込み() {
         String source = "hello world";
         Index index = new Index(0);
-        Signature signature = new Signature(source, index);
+        Phrase signature = new Phrase(source, index);
 
         assertEquals(11, index.get());
         assertEquals("hello", signature.get(0));
@@ -27,20 +27,20 @@ public class SignatureTest {
 
         String source = "();{}";
         Index index = new Index(0);
-        Signature signature = new Signature(source, index);
+        Phrase signature = new Phrase(source, index);
 
         assertEquals("(", signature.get(0));
 
-        signature = new Signature(source, index);
+        signature = new Phrase(source, index);
         assertEquals(")", signature.get(0));
 
-        signature = new Signature(source, index);
+        signature = new Phrase(source, index);
         assertEquals(";", signature.get(0));
 
-        signature = new Signature(source, index);
+        signature = new Phrase(source, index);
         assertEquals("{", signature.get(0));
 
-        signature = new Signature(source, index);
+        signature = new Phrase(source, index);
         assertEquals("}", signature.get(0));
     }
 
@@ -48,7 +48,7 @@ public class SignatureTest {
     @MethodSource("個別の文節として解析するパラメータ")
     public void 個別の文節として解析する(String source, String expected) {
         Index index = new Index(0);
-        Signature signature = new Signature(source, index);
+        Phrase signature = new Phrase(source, index);
 
         assertEquals(expected, signature.get(1));
     }
@@ -71,7 +71,7 @@ public class SignatureTest {
     @MethodSource("シングルコーテーションを個別の文節として解析するパラメータ")
     void シングルコーテーションを個別の文節として解析する(String source, String expected) {
         Index index = new Index(0);
-        Signature signature = new Signature(source, index);
+        Phrase signature = new Phrase(source, index);
 
         assertEquals(expected, signature.get(1));
     }
@@ -91,7 +91,7 @@ public class SignatureTest {
     public void カンマを個別の単語として解析する() {
         String source = "a,b,c";
         Index index = new Index(0);
-        Signature signature = new Signature(source, index);
+        Phrase signature = new Phrase(source, index);
 
         assertEquals("a", signature.get(0));
         assertEquals(",", signature.get(1));
@@ -104,7 +104,7 @@ public class SignatureTest {
     public void 複数行コメントを個別の文節として解析する() {
 
         String source = "pu/*aiueo*/ueo";
-        Signature signature = new Signature(source, new Index(0));
+        Phrase signature = new Phrase(source, new Index(0));
 
         assertEquals("pu", signature.get(0));
         assertEquals("ueo", signature.get(1));
@@ -115,7 +115,7 @@ public class SignatureTest {
     public void コメントを個別の文節として解析する(){
             
             String source = "pu//aiueo\r\nueo";
-            Signature signature = new Signature(source, new Index(0));
+            Phrase signature = new Phrase(source, new Index(0));
     
             assertEquals("pu", signature.get(0));
             assertEquals("ueo", signature.get(1));

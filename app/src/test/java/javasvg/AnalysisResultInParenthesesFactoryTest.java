@@ -7,15 +7,15 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
-import javasvg.signature.Signature;
-import javasvg.signature.SignaturesFactory;
+import javasvg.phrase.Phrase;
+import javasvg.phrase.PhraseListFactory;
 
 public class AnalysisResultInParenthesesFactoryTest {
 
     //CreateInParenthesesの基本的なテスト
     @Test
     public void testCreateInParentheses() {
-        ArrayList<Signature> signatures = SignaturesFactory.create("(int a, int b, int c)");
+        ArrayList<Phrase> signatures = PhraseListFactory.create("(int a, int b, int c)");
         AnalysisResultInParentheses result = AnalysisResultInParentheses.create(signatures, new Index(0));
 
         assertEquals(1, result.size());

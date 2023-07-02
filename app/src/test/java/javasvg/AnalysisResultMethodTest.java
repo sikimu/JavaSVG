@@ -7,14 +7,14 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
-import javasvg.signature.Signature;
-import javasvg.signature.SignaturesFactory;
+import javasvg.phrase.Phrase;
+import javasvg.phrase.PhraseListFactory;
 
 public class AnalysisResultMethodTest {
 
     @Test
     public void 基本的な引数ありメソッドの解析() {
-        ArrayList<Signature> signatures = SignaturesFactory.create("public int a(int b){}");
+        ArrayList<Phrase> signatures = PhraseListFactory.create("public int a(int b){}");
         AnalysisResultMethod result = new AnalysisResultMethod(signatures, new Index(0));
 
         assertEquals("a", result.name);
@@ -23,7 +23,7 @@ public class AnalysisResultMethodTest {
 
     @Test
     public void if文の入ったメソッドの解析() {
-        ArrayList<Signature> signatures = SignaturesFactory.create("public int a(int b){if(b == 0){return 0;}return 1;}");
+        ArrayList<Phrase> signatures = PhraseListFactory.create("public int a(int b){if(b == 0){return 0;}return 1;}");
         AnalysisResultMethod result = new AnalysisResultMethod(signatures, new Index(0));
 
         assertEquals("a", result.name);

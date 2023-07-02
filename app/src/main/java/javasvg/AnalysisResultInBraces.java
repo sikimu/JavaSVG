@@ -2,7 +2,7 @@ package javasvg;
 import java.util.ArrayList;
 import java.util.stream.Stream;
 
-import javasvg.signature.Signature;
+import javasvg.phrase.Phrase;
 
 /**
  * {}の中身を表すクラス
@@ -31,10 +31,10 @@ public class AnalysisResultInBraces extends AnalysisResult {
         return list.size();
     }
 
-    public static AnalysisResultInBraces create(ArrayList<Signature> signatures, Index index) {
+    public static AnalysisResultInBraces create(ArrayList<Phrase> signatures, Index index) {
         ArrayList<AnalysisResult> list = new ArrayList<AnalysisResult>();
 
-        Signature signature = signatures.get(index.get());
+        Phrase signature = signatures.get(index.get());
 
         if (signature.contains("{") == false) {
             throw new IllegalArgumentException("開始括弧がありません");

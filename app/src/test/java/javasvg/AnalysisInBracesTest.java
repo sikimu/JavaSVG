@@ -7,14 +7,14 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
-import javasvg.signature.Signature;
-import javasvg.signature.SignaturesFactory;
+import javasvg.phrase.Phrase;
+import javasvg.phrase.PhraseListFactory;
 
 public class AnalysisInBracesTest {
 
     @Test
     public void 基本テスト() {
-        ArrayList<Signature> signatures = SignaturesFactory.create("{int a; int b;}public int c;");
+        ArrayList<Phrase> signatures = PhraseListFactory.create("{int a; int b;}public int c;");
 
         AnalysisResultInBraces result = AnalysisResultInBraces.create(signatures, new Index(0));
 

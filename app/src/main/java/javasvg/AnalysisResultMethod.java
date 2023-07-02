@@ -2,7 +2,7 @@ package javasvg;
 
 import java.util.ArrayList;
 
-import javasvg.signature.Signature;
+import javasvg.phrase.Phrase;
 
 public class AnalysisResultMethod extends AnalysisResult {
 
@@ -14,9 +14,9 @@ public class AnalysisResultMethod extends AnalysisResult {
 
     final public AnalysisResultInBraces inBraces;
 
-    public AnalysisResultMethod(ArrayList<Signature> signatures, Index index) {
+    public AnalysisResultMethod(ArrayList<Phrase> signatures, Index index) {
 
-        Signature signature = signatures.get(index.get());
+        Phrase signature = signatures.get(index.get());
         this.name = searchName(signature);
         index.increment();
 
@@ -28,9 +28,9 @@ public class AnalysisResultMethod extends AnalysisResult {
     }
 
     // throws部分の取得
-    private AnalysisResultCode searchThrows(ArrayList<Signature> signatures, Index index){
+    private AnalysisResultCode searchThrows(ArrayList<Phrase> signatures, Index index){
         
-        Signature signature = signatures.get(index.get());
+        Phrase signature = signatures.get(index.get());
         // throwsがある場合のみ
         if (signatures.get(index.get()).contains("throws") == false) {
             return new AnalysisResultCode("");
@@ -42,14 +42,14 @@ public class AnalysisResultMethod extends AnalysisResult {
     }
 
     // 引数部分の取得
-    private AnalysisResultCode searchArguments(ArrayList<Signature> signatures, Index index){
+    private AnalysisResultCode searchArguments(ArrayList<Phrase> signatures, Index index){
 
         if (signatures.get(index.get()).contains("(") == false) {
             throw new IllegalArgumentException("開始括弧がありません");
         }
         index.increment();
         
-        Signature signature = signatures.get(index.get());
+        Phrase signature = signatures.get(index.get());
         index.increment();
         // 引数がない場合
         if (signature.contains(")")) {
@@ -65,16 +65,16 @@ public class AnalysisResultMethod extends AnalysisResult {
         return result;
     }
 
-    private String searchName(Signature signature) {
+    private String searchName(Phrase signature) {
 
         return signature.get(signature.size() - 1);
     }
 
-    private AnalysisResultInBraces create(ArrayList<Signature> signatures, Index index){
+    private AnalysisResultInBraces create(ArrayList<Phrase> signatures, Index index){
         
         ArrayList<AnalysisResult> list = new ArrayList<AnalysisResult>();
 
-        Signature signature = signatures.get(index.get());
+        Phrase signature = signatures.get(index.get());
 
         if (signature.contains("{") == false) {
             throw new IllegalArgumentException("開始括弧がありません");

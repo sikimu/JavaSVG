@@ -15,8 +15,8 @@ public class PhraseListFactory {
     while (index.get() < source.length()) {
 
       // 1文節を取得
-      Phrase signature = new Phrase(source, index);
-      signatures.add(signature);
+      Phrase phrase = new Phrase(source, index);
+      signatures.add(phrase);
 
       // 1文節の後のスペースを飛ばす
       while (index.get() < source.length()) {

@@ -10,7 +10,7 @@ public class AnalysisResultMethod extends AnalysisResult {
 
     final public AnalysisResultCode arguments;
 
-    final public AnalysisResultThrows arThrows;
+    final public ThrowsCode arThrows;
 
     final public AnalysisResultInBraces inBraces;
 
@@ -28,7 +28,7 @@ public class AnalysisResultMethod extends AnalysisResult {
     }
 
     // throws部分の取得
-    private AnalysisResultThrows searchThrows(ArrayList<Phrase> signatures, Index index){
+    private ThrowsCode searchThrows(ArrayList<Phrase> signatures, Index index){
         
         Phrase signature = signatures.get(index.get());
         // throwsがあるがない場合
@@ -36,7 +36,7 @@ public class AnalysisResultMethod extends AnalysisResult {
             return null;
         }        
         // throwsがある場合
-        AnalysisResultThrows result = new AnalysisResultThrows(signature);
+        ThrowsCode result = new ThrowsCode(signature);
         index.increment();
         return result;
     }

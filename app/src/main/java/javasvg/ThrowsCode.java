@@ -2,11 +2,11 @@ package javasvg;
 
 import javasvg.phrase.Phrase;
 
-public class AnalysisResultThrows extends AnalysisResult{
+public class ThrowsCode{
     
     final public AnalysisResultCode arThrows;
 
-    public AnalysisResultThrows(Phrase signature) {
+    public ThrowsCode(Phrase signature) {
 
         if (signature.contains("throws") == false) {
             throw new IllegalArgumentException("throwsがありません");

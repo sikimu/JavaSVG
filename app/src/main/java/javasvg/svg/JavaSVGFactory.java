@@ -2,7 +2,7 @@ package javasvg.svg;
 
 import java.util.ArrayList;
 
-import javasvg.AnalysisResultPackage;
+import jp.co.javanalysis.analysis.AnalysisResultPackage;
 
 public class JavaSVGFactory {
     

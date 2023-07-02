@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import javasvg.AnalysisFactory;
-import javasvg.AnalysisResultPackage;
-import javasvg.AnalysisResultSource;
+import jp.co.javanalysis.analysis.AnalysisFactory;
+import jp.co.javanalysis.analysis.AnalysisResultPackage;
+import jp.co.javanalysis.analysis.AnalysisResultSource;
 
 public class JavaSVGFactoryTest {
     @Test

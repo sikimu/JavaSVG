@@ -1,5 +1,6 @@
 package javasvg;
 
+import jp.co.javanalysis.analysis.AnalysisResultCode;
 import jp.co.javanalysis.phrase.Phrase;
 
 public class ThrowsCode{

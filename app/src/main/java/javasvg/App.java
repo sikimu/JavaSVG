@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import javasvg.svg.JavaSVG;
 import javasvg.svg.JavaSVGFactory;
 import javasvg.svg.SVGCreator;
+import jp.co.javanalysis.analysis.AnalysisFactory;
+import jp.co.javanalysis.analysis.AnalysisResultPackage;
 
 public class App {
 

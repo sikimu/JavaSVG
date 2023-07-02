@@ -18,9 +18,9 @@ public class AnalysisResultIfTest {
         AnalysisResultIf result = new AnalysisResultIf(signatures, new Index(0));
         
 
-        assertEquals("abc==c", result.expression.toString());//ifの条件式
+        assertEquals("abc == c", result.expression.toString());//ifの条件式
         //型がAnalysisResultInBracesであること
-        assertEquals("a=1", ((AnalysisResultInBraces)result.statement).get(0).toString());
+        assertEquals("a = 1", ((AnalysisResultInBraces)result.statement).get(0).toString());
     }
 
     @Test
@@ -28,8 +28,8 @@ public class AnalysisResultIfTest {
         ArrayList<Phrase> signatures = PhraseListFactory.create("if(abc==c)a=1;");
         AnalysisResultIf result = new AnalysisResultIf(signatures, new Index(0));
 
-        assertEquals("abc==c", result.expression.toString());//ifの条件式
+        assertEquals("abc == c", result.expression.toString());//ifの条件式
         //型がAnalysisResultCodeであること
-        assertEquals("a=1", ((AnalysisResultCode)result.statement).code);
+        assertEquals("a = 1", ((AnalysisResultCode)result.statement).code);
     }    
 }

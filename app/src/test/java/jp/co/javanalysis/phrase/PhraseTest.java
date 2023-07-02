@@ -9,6 +9,7 @@ import javasvg.Index;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 public class PhraseTest {
@@ -120,5 +121,27 @@ public class PhraseTest {
             assertEquals("pu", signature.get(0));
             assertEquals("ueo", signature.get(1));
             assertEquals("//aiueo", signature.getComment(0));
-        }
+    }
+
+    @Test
+    public void equalも単語として解析する(){
+            
+            String source = "pu=aiueo";
+            Phrase signature = new Phrase(source, new Index(0));
+    
+            assertEquals("pu", signature.get(0));
+            assertEquals("=", signature.get(1));
+            assertEquals("aiueo", signature.get(2));
+    }
+
+    @Test
+    public void splitのテスト(){
+        String source = "aaa=bbb=ccc";
+        Phrase phrase = new Phrase(source, new Index(0));
+
+        List<Phrase> list = phrase.split("=");
+        assertEquals("aaa", list.get(0).get(0));
+        assertEquals("bbb", list.get(1).get(0));
+        assertEquals("ccc", list.get(2).get(0));
+    }
 }

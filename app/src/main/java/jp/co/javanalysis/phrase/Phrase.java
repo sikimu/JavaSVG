@@ -41,7 +41,7 @@ public class Phrase {
             || source.substring(index.get()).startsWith("//")
             || c == '(' || c == ')' || c == '{' || c == '}'
             || c == ' ' || c == '\n' || c == '\t' || c == '\r'
-            || c == ','){
+            || c == ',' || c == '='){
           if(word.length() > 0){
             list.add(word);
             word = "";
@@ -88,7 +88,11 @@ public class Phrase {
           word = "";
           index.increment();
         } 
-        else if(c == ','){
+        else if(source.substring(index.get()).startsWith("==")){
+          list.add(source.substring(index.get()).substring(0, 2));
+          index.add(2);
+        }
+        else if(c == ',' || c == '='){
           list.add(String.valueOf(c));
           index.increment();
         }   
@@ -109,6 +113,11 @@ public class Phrase {
 
       stringList = Collections.unmodifiableList(list);
       commentList = Collections.unmodifiableList(tempCommentList);
+    }
+
+    private Phrase(List<String> stringList, List<String> commentList) {
+      this.stringList = Collections.unmodifiableList(stringList);
+      this.commentList = Collections.unmodifiableList(commentList);
     }
 
     public boolean contains(String word) {
@@ -141,5 +150,25 @@ public class Phrase {
 
     public Object getComment(int i) {
       return commentList.get(i);
+    }
+
+    public List<Phrase> split(String string) {
+      List<Phrase> list = new ArrayList<>();
+      List<String> tempStringList = new ArrayList<>();
+      for (int i = 0; i < stringList.size(); i++) {
+        String word = stringList.get(i);
+        if (word.equals(string)) {
+          if (tempStringList.size() > 0) {
+            list.add(new Phrase(tempStringList, new ArrayList<>()));
+            tempStringList = new ArrayList<>();
+          }
+        } else {
+          tempStringList.add(word);
+        }
+      }
+      if (tempStringList.size() > 0) {
+        list.add(new Phrase(tempStringList, new ArrayList<>()));
+      }
+      return list;
     }
   }

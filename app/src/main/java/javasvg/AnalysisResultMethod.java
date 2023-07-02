@@ -31,9 +31,9 @@ public class AnalysisResultMethod extends AnalysisResult {
     private AnalysisResultCode searchThrows(ArrayList<Phrase> signatures, Index index){
         
         Phrase signature = signatures.get(index.get());
-        // throwsがある場合のみ
+        // throwsがあるがない場合
         if (signatures.get(index.get()).contains("throws") == false) {
-            return new AnalysisResultCode("");
+            return null;
         }        
         // throwsがある場合
         AnalysisResultCode result = new AnalysisResultCode(signature.get(signature.size() - 1));

@@ -18,4 +18,13 @@ public class AnalysisResultCodeTest {
         AnalysisResultCode result = new AnalysisResultCode(phrase);
         assertEquals("aaa ( a + b )", result.command.toString());
     }
+
+    @Test
+    public void 代入あり(){
+        ArrayList<Phrase> phraseList = PhraseListFactory.create("aaa = a + b;");
+        Phrase phrase = phraseList.get(0);
+        AnalysisResultCode result = new AnalysisResultCode(phrase);
+        assertEquals("aaa", result.destination.toString());
+        assertEquals("a + b", result.command.toString());
+    }
 }

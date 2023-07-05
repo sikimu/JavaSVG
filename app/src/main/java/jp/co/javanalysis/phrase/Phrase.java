@@ -92,14 +92,14 @@ public class Phrase {
           list.add(source.substring(index.get()).substring(0, 2));
           index.add(2);
         }
-        else if(c == ',' || c == '='){
+        else if(c == ',' || c == '='|| c == '(' || c == ')'){
           list.add(String.valueOf(c));
           index.increment();
         }   
         else if (c == ' ' || c == '\n' || c == '\t' || c == '\r') {
           index.increment();
         } 
-        else if (c == '(' || c == ')' || c == '{' || c == '}' || c == ';') {
+        else if (c == '{' || c == '}' || c == ';') {
           break;
         } else {
           word += c;
@@ -170,5 +170,13 @@ public class Phrase {
         list.add(new Phrase(tempStringList, new ArrayList<>()));
       }
       return list;
+    }
+
+    public Phrase subPhrase(int start, int end) {
+      return new Phrase(stringList.subList(start, end), new ArrayList<>());
+    }
+
+    public int indexOf(String string) {
+      return stringList.indexOf(string);
     }
   }

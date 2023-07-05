@@ -16,60 +16,38 @@ public class AnalysisResultMethod extends AnalysisResult {
 
     final public AnalysisResultInBraces inBraces;
 
-    public AnalysisResultMethod(ArrayList<Phrase> signatures, Index index) {
+    public AnalysisResultMethod(ArrayList<Phrase> phraseList, Index index) {
 
-        Phrase signature = signatures.get(index.get());
-        this.name = searchName(signature);
+        Phrase phrase = phraseList.get(index.get());
+        this.name = searchName(phrase);
+        this.arguments = searchArguments(phrase);
+        this.arThrows = searchThrows(phrase);
         index.increment();
 
-        arguments = searchArguments(signatures, index);
-
-        arThrows = searchThrows(signatures, index);
-
-        this.inBraces = create(signatures, index);
+        this.inBraces = create(phraseList, index);
     }
 
     // throws部分の取得
-    private ThrowsCode searchThrows(ArrayList<Phrase> signatures, Index index){
+    private ThrowsCode searchThrows(Phrase phrase){
         
-        Phrase signature = signatures.get(index.get());
-        // throwsがあるがない場合
-        if (signatures.get(index.get()).contains("throws") == false) {
+        if(phrase.contains("throws") == false){
             return null;
-        }        
-        // throwsがある場合
-        ThrowsCode result = new ThrowsCode(signature);
-        index.increment();
+        }
+
+        ThrowsCode result = new ThrowsCode(phrase.subPhrase(phrase.indexOf("throws") + 1, phrase.size()));
+
         return result;
     }
 
     // 引数部分の取得
-    private AnalysisResultCode searchArguments(ArrayList<Phrase> signatures, Index index){
+    private AnalysisResultCode searchArguments(Phrase phrase){
 
-        if (signatures.get(index.get()).contains("(") == false) {
-            throw new IllegalArgumentException("開始括弧がありません");
-        }
-        index.increment();
-        
-        Phrase phrase = signatures.get(index.get());
-        index.increment();
-        // 引数がない場合
-        if (phrase.contains(")")) {
-            return null;
-        }   
-        
-        // 引数がある場合
-        AnalysisResultCode result = new AnalysisResultCode(phrase);
-        if (signatures.get(index.get()).contains(")") == false) {
-            throw new IllegalArgumentException("終了括弧がありません");
-        }                
-        index.increment();
-        return result;
+        return new AnalysisResultCode(phrase.subPhrase(phrase.indexOf("(") + 1, phrase.indexOf(")")));
     }
 
     private String searchName(Phrase signature) {
 
-        return signature.get(signature.size() - 1);
+        return signature.get(signature.indexOf("(") - 1);
     }
 
     private AnalysisResultInBraces create(ArrayList<Phrase> signatures, Index index){

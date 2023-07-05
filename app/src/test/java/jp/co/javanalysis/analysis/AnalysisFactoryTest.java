@@ -10,8 +10,7 @@ public class AnalysisFactoryTest {
     public void testCreate() {
         AnalysisResultSource arSource = AnalysisFactory.create("new FileReader(file);");
 
-        assertEquals("new FileReader", arSource.get(0).toString());
-        assertEquals("(", arSource.get(1).toString());
+        assertEquals("new FileReader ( file )", arSource.get(0).toString());
     }
 
     @Test

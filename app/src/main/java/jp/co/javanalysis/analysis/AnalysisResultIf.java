@@ -11,19 +11,35 @@ public class AnalysisResultIf extends AnalysisResult {
 
     final public AnalysisResult statement; 
 
-    public AnalysisResultIf(ArrayList<Phrase> signatures, Index index) {
-
-        index.add(2);// if(を飛ばす
-        this.expression = new AnalysisResultCode(signatures.get(index.get()));
-        index.add(2);// )を飛ばす
-        //次の処理が{なら
-        if (signatures.get(index.get()).get(0).equals("{")) {
-            this.statement = AnalysisResultInBraces.create(signatures, index);
+    public AnalysisResultIf(ArrayList<Phrase> phraseList, Index index) {
+        
+        Phrase phrase = phraseList.get(index.get());
+        //if()の解析
+        int i = 2;
+        int cnt = 0;
+        while(true){
+            if(phrase.get(i).equals(")")){
+                if(cnt == 0){
+                    break;
+                }
+                else{
+                    cnt--;
+                }
+            }
+            else if(phrase.get(i).equals("(")){
+                cnt++;
+            }
+            i++;
         }
-        //1行解析
+        expression = new AnalysisResultCode(phrase.subPhrase(2, i));
+        //1行の場合
+        if(phrase.size() > i+1){
+            statement = new AnalysisResultCode(phrase.subPhrase(i + 1, phrase.size()));
+        }
+        //複数行の場合
         else{
-            this.statement = new AnalysisResultCode(signatures.get(index.get()));
             index.increment();
+            statement = AnalysisResultInBraces.create(phraseList, index);
         }
     }
 }

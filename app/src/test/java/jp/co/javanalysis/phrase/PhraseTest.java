@@ -144,4 +144,21 @@ public class PhraseTest {
         assertEquals("bbb", list.get(1).get(0));
         assertEquals("ccc", list.get(2).get(0));
     }
+
+    @Test
+    public void indexofのテスト(){
+        String source = "public int a(int b){}";
+        Phrase phrase = new Phrase(source, new Index(0));
+
+        assertEquals(3, phrase.indexOf("("));
+        assertEquals(6, phrase.indexOf(")"));
+    }
+
+    @Test
+    public void subPhraseのテスト(){
+        String source = "public int a(int b){}";
+        Phrase phrase = new Phrase(source, new Index(0));
+
+        assertEquals("int b", phrase.subPhrase(4, 6).toString());
+    }
 }

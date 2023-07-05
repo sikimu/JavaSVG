@@ -63,30 +63,15 @@ public class AnalysisResultClass extends AnalysisResult {
         return new AnalysisResultInBraces(list);
     }
 
-    private boolean isMethod(ArrayList<Phrase> signatures, Index index) {
+    private boolean isMethod(ArrayList<Phrase> phraList, Index index) {
 
-        if (signatures.size() <= index.get() + 1) {
+        Phrase phrase = phraList.get(index.get());
+        //(の位置を特定できればメソッド
+        int indexOfOpenParenthesis = phrase.indexOf("(");
+        if(indexOfOpenParenthesis == -1){
             return false;
         }
 
-        Phrase signature1 = signatures.get(index.get());
-        Phrase signature2 = signatures.get(index.get() + 1);
-
-        if(signature1.contains("void") == false
-        && signature1.contains("int") == false
-        && signature1.contains("String") == false
-        && signature1.contains("double") == false
-        && signature1.contains("boolean") == false
-        && signature1.contains("char") == false
-        && signature1.contains("float") == false
-        && signature1.contains("long") == false
-        && signature1.contains("byte") == false
-        && signature1.contains("short") == false
-        && signature1.contains("Object") == false
-        && signature1.contains("ArrayList") == false){
-            return false;
-        }
-
-        return signature2.contains("(");
+        return true;
     }
 }

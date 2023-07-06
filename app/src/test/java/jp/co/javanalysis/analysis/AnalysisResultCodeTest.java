@@ -16,7 +16,7 @@ public class AnalysisResultCodeTest {
         ArrayList<Phrase> phraseList = PhraseListFactory.create("aaa(a + b);");
         Phrase phrase = phraseList.get(0);
         AnalysisResultCode result = new AnalysisResultCode(phrase);
-        assertEquals("aaa ( a + b )", result.command.toString());
+        assertEquals("aaa ( a + b )", result.command.code);
     }
 
     @Test
@@ -24,7 +24,7 @@ public class AnalysisResultCodeTest {
         ArrayList<Phrase> phraseList = PhraseListFactory.create("aaa = a + b;");
         Phrase phrase = phraseList.get(0);
         AnalysisResultCode result = new AnalysisResultCode(phrase);
-        assertEquals("aaa", result.destination.toString());
-        assertEquals("a + b", result.command.toString());
+        assertEquals("aaa", result.destination.code);
+        assertEquals("a + b", result.command.code);
     }
 }

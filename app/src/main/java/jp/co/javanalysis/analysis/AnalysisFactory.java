@@ -3,7 +3,6 @@ package jp.co.javanalysis.analysis;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import javasvg.Index;
 import jp.co.javanalysis.FileUtil;

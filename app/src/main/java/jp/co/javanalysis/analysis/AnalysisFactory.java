@@ -12,25 +12,6 @@ import jp.co.javanalysis.phrase.PhraseListFactory;
 
 public class AnalysisFactory {
 
-  public static AnalysisResultPackage createPackage(String folderPath) throws Exception {
-
-    // folderPath内のファイルを再帰的に取得
-    List<File> fileList = FileUtil.getAllFiles(folderPath);
-
-    ArrayList<AnalysisResultSource> list = new ArrayList<AnalysisResultSource>();
-
-    // ファイル名をすべて出力
-    for (int i = 0; i < fileList.size(); i++) {
-      File file = fileList.get(i);
-      if (file.getName().endsWith(".java")) {
-        AnalysisResultSource result = AnalysisFactory.create(file);
-        list.add(result);
-      }
-    }
-
-    return new AnalysisResultPackage(list);
-  }
-
   public static AnalysisResultSource create(File file) throws IOException {
     String source = FileUtil.readFileToString(file);
     return create(source);

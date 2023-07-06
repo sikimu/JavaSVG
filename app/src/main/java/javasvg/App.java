@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import javasvg.svg.JavaSVG;
 import javasvg.svg.JavaSVGFactory;
 import javasvg.svg.SVGCreator;
-import jp.co.javanalysis.analysis.AnalysisFactory;
+import jp.co.javanalysis.analysis.AnalysisPackageFactory;
 import jp.co.javanalysis.analysis.AnalysisResultPackage;
 
 public class App {
@@ -14,7 +14,7 @@ public class App {
 
     public static void main(String[] args) throws Exception {
 
-        AnalysisResultPackage result = AnalysisFactory.createPackage(folderPath);
+        AnalysisResultPackage result = AnalysisPackageFactory.createPackage(folderPath);
 
         System.out.println(String.join("\n", result.getAllClasses()));
 

@@ -3,7 +3,7 @@ package jp.co.javanalysis.analysis;
 import java.util.ArrayList;
 
 import javasvg.Index;
-import javasvg.ThrowsCode;
+import jp.co.javanalysis.analysis.code.ThrowsCode;
 import jp.co.javanalysis.phrase.Phrase;
 
 public class AnalysisResultMethod extends AnalysisResult {

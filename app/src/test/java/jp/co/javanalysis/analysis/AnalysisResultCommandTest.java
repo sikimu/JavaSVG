@@ -11,12 +11,12 @@ import java.util.ArrayList;
 public class AnalysisResultCommandTest {
 
     @Test
-    public void 基本テスト() {
+    public void メソッド呼び出しテスト() {
 
         ArrayList<Phrase> phraseList = PhraseListFactory.create("a();");
 
         AnalysisResultCommand analysisResultCommand = new AnalysisResultCommand(phraseList.get(0));
-
-        assertEquals("a ( )", analysisResultCommand.code);
+        
+        assertEquals("a ( )", analysisResultCommand.call.code);
     }
 }

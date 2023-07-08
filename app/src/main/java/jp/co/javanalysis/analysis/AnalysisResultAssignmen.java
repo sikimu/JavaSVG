@@ -6,8 +6,8 @@ import jp.co.javanalysis.phrase.Phrase;
 
 public class AnalysisResultAssignmen extends AnalysisResult {
 
-    AnalysisResultVariable destination;
-    AnalysisResultCommand command;
+    final public AnalysisResultVariable destination;
+    final public AnalysisResultCommand command;
     String code;
 
     public AnalysisResultAssignmen(Phrase phrase) {

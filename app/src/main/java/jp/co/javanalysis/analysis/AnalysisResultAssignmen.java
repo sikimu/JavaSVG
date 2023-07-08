@@ -6,7 +6,7 @@ import jp.co.javanalysis.phrase.Phrase;
 
 public class AnalysisResultAssignmen extends AnalysisResult {
 
-    AnalysisResultDestination destination;
+    AnalysisResultVariable destination;
     AnalysisResultCommand command;
     String code;
 
@@ -15,7 +15,7 @@ public class AnalysisResultAssignmen extends AnalysisResult {
         code = phrase.toString();
 
         List<Phrase> split = phrase.split("=");
-        destination = new AnalysisResultDestination(split.get(0));
+        destination = new AnalysisResultVariable(split.get(0));
         command = new AnalysisResultCommand(split.get(1));
     }
 

@@ -74,6 +74,10 @@ public class AnalysisResultMethod extends AnalysisResult {
             else if (phrase.get(0).equals("if")){
                 list.add(new AnalysisResultIf(signatures, index));
             }
+            else if (phrase.contains("=")){
+                list.add(new AnalysisResultAssignmen(phrase));
+                index.increment();
+            }
             else {
                 list.add(new AnalysisResultCode(phrase));
                 index.increment();

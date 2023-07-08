@@ -3,7 +3,6 @@ package jp.co.javanalysis.analysis;
 import java.util.ArrayList;
 
 import javasvg.Index;
-import jp.co.javanalysis.analysis.code.ThrowsCode;
 import jp.co.javanalysis.phrase.Phrase;
 
 public class AnalysisResultMethod extends AnalysisResult {
@@ -12,7 +11,7 @@ public class AnalysisResultMethod extends AnalysisResult {
 
     final public AnalysisResultCode arguments;
 
-    final public ThrowsCode arThrows;
+    final public AnalysisResultThrows arThrows;
 
     final public AnalysisResultInBraces inBraces;
 
@@ -28,13 +27,13 @@ public class AnalysisResultMethod extends AnalysisResult {
     }
 
     // throws部分の取得
-    private ThrowsCode searchThrows(Phrase phrase){
+    private AnalysisResultThrows searchThrows(Phrase phrase){
         
         if(phrase.contains("throws") == false){
             return null;
         }
 
-        ThrowsCode result = new ThrowsCode(phrase.subPhrase(phrase.indexOf("throws") + 1, phrase.size()));
+        AnalysisResultThrows result = new AnalysisResultThrows(phrase.subPhrase(phrase.indexOf("throws") + 1, phrase.size()));
 
         return result;
     }

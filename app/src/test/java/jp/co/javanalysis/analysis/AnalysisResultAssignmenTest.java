@@ -18,6 +18,6 @@ public class AnalysisResultAssignmenTest {
         AnalysisResultAssignmen analysisResultAssignmen = new AnalysisResultAssignmen(phraseList.get(0));
 
         assertEquals("a", analysisResultAssignmen.destination.code);
-        assertEquals("b", analysisResultAssignmen.command.code);
+        assertEquals("b", analysisResultAssignmen.command.toString());
     }
 }

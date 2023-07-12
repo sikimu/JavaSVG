@@ -7,7 +7,7 @@ import jp.co.javanalysis.phrase.Phrase;
 public class AnalysisResultAssignmen extends AnalysisResult {
 
     final public AnalysisResultVariable destination;
-    final public AnalysisResultCall command;
+    final public AnalysisResult command;
     String code;
 
     public AnalysisResultAssignmen(Phrase phrase) {
@@ -16,7 +16,14 @@ public class AnalysisResultAssignmen extends AnalysisResult {
 
         List<Phrase> split = phrase.split("=");
         destination = new AnalysisResultVariable(split.get(0));
-        command = new AnalysisResultCall(split.get(1));
+        // 演算子が含まれている場合
+        if(phrase.contains("+") || phrase.contains("-") || 
+            phrase.contains("*") || phrase.contains("/")) {
+            command = new AnalysisResultCalculationExpression(split.get(1));
+        }
+        else{
+            command = new AnalysisResultCall(split.get(1));
+        }
     }
 
     public String toString() {

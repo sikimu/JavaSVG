@@ -41,6 +41,7 @@ public class Phrase {
             || source.substring(index.get()).startsWith("//")
             || c == '(' || c == ')' || c == '{' || c == '}'
             || c == ' ' || c == '\n' || c == '\t' || c == '\r'
+            || c == '+' || c == '-' || c == '*' || c == '/' || c == '<' || c == '>'
             || c == ',' || c == '='){
           if(word.length() > 0){
             list.add(word);
@@ -92,7 +93,7 @@ public class Phrase {
           list.add(source.substring(index.get()).substring(0, 2));
           index.add(2);
         }
-        else if(c == ',' || c == '='|| c == '(' || c == ')'){
+        else if(c == ',' || c == '='|| c == '(' || c == ')' || c == '+' || c == '-' || c == '*' || c == '/' || c == '<' || c == '>'){
           list.add(String.valueOf(c));
           index.increment();
         }   

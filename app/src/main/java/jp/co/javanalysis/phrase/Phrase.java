@@ -27,9 +27,9 @@ public class Phrase {
       }
 
       // 1文字で文節とするもの
-      char firstChar = source.charAt(index.get());
-      if (firstChar == '(' || firstChar == ')' || firstChar == '{' || firstChar == '}' || firstChar == ';') {
-        list.add(String.valueOf(firstChar));
+      char c = source.charAt(index.get());
+      if (c == '{' || c == '}') {
+        list.add(String.valueOf(c));
         index.increment();
 
         stringList = Collections.unmodifiableList(list);
@@ -39,7 +39,8 @@ public class Phrase {
 
       String word = "";
       while (index.get() < source.length()) {
-        char c = source.charAt(index.get());
+        // 1文字で文節とするもの
+        c = source.charAt(index.get());
 
         // 単語の切れ目だったら区切る
         if(source.substring(index.get()).startsWith("/*")
@@ -98,7 +99,7 @@ public class Phrase {
           index.add(2);
         }
         else if(source.substring(index.get()).matches("^(" + String.join("|", WORDS) + ").*")){
-          list.add(source.substring(index.get()).substring(0, 2));
+          list.add(String.valueOf(c));
           index.increment();
         }   
         else if (c == ' ' || c == '\n' || c == '\t' || c == '\r') {

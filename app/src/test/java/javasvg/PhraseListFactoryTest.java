@@ -12,12 +12,10 @@ import jp.co.javanalysis.phrase.PhraseListFactory;
 public class PhraseListFactoryTest {
     @Test
     void 文節と文節の間のスペース() {
-        ArrayList<Phrase> signatures = PhraseListFactory.create("() {}");
+        ArrayList<Phrase> signatures = PhraseListFactory.create("{ }");
 
-        assertEquals("(", signatures.get(0).get(0));
-        assertEquals(")", signatures.get(1).get(0));
-        assertEquals("{", signatures.get(2).get(0));
-        assertEquals("}", signatures.get(3).get(0));
+        assertEquals("{", signatures.get(0).get(0));
+        assertEquals("}", signatures.get(1).get(0));
     }
 
     @Test

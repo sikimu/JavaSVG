@@ -12,7 +12,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 public class PhraseTest {
@@ -27,25 +26,27 @@ public class PhraseTest {
     }
 
     @Test
-    public void 文節の区切り文字を個別の文節とする() {
-
-        String source = "();{}";
+    public void クラス形状(){
+        String source = "public class A{aaaaaa}";
         Index index = new Index(0);
         Phrase signature = new Phrase(source, index);
 
-        assertEquals("(", signature.get(0));
+        assertEquals("public", signature.get(0));
+        assertEquals("class", signature.get(1));
+        assertEquals("A", signature.get(2));
+    }
 
-        signature = new Phrase(source, index);
-        assertEquals(")", signature.get(0));
+    @Test
+    public void 文節の区切り文字を個別の文節とする() {
 
-        signature = new Phrase(source, index);
-        assertEquals(";", signature.get(0));
+        String source = "{}";
+        Index index = new Index(0);
 
-        signature = new Phrase(source, index);
+        Phrase signature = new Phrase(source, index);
         assertEquals("{", signature.get(0));
 
-        signature = new Phrase(source, index);
-        assertEquals("}", signature.get(0));
+        Phrase signature2 = new Phrase(source, index);
+        assertEquals("}", signature2.get(0));
     }
 
     @ParameterizedTest

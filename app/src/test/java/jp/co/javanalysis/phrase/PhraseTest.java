@@ -3,13 +3,16 @@ package jp.co.javanalysis.phrase;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import javasvg.Index;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 public class PhraseTest {
@@ -99,6 +102,61 @@ public class PhraseTest {
         assertEquals("b", signature.get(2));
         assertEquals(",", signature.get(3));
         assertEquals("c", signature.get(4));
+    }
+
+    @Test
+    public void 正規表現を使ったstartsWith(){
+        List<String> WORDS = Arrays.asList(",", "!=");
+        String regex = String.join("|", WORDS);
+
+        String source = "!=aaaaa";
+
+        assertTrue(source.matches("^(" + regex + ").*"));
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+        "1+1, 1, +, 1",
+        "1-1, 1, -, 1",
+        "1*1, 1, *, 1",
+        "1/1, 1, /, 1",
+        "1%1, 1, %, 1",
+        "1=1, 1, =, 1",
+        "1==1, 1, ==, 1",
+        "1!=1, 1, !=, 1",
+        "1<1, 1, <, 1",
+        "1<=1, 1, <=, 1",
+        "1>1, 1, >, 1",
+        "1>=1, 1, >=, 1",
+        "1&&1, 1, &&, 1",
+        "1||1, 1, ||, 1",
+        "1&1, 1, &, 1",
+        "1|1, 1, |, 1",
+        "1^1, 1, ^, 1",
+        "1<<1, 1, <<, 1",
+        "1>>1, 1, >>, 1",
+        "1>>>1, 1, >>>, 1",
+        "1+=1, 1, +=, 1",
+        "1-=1, 1, -=, 1",
+        "1*=1, 1, *=, 1",
+        "1/=1, 1, /=, 1",
+        "1%=1, 1, %=, 1",
+        "1&=1, 1, &=, 1",
+        "1|=1, 1, |=, 1",
+        "1^=1, 1, ^=, 1",
+        "1<<=1, 1, <<=, 1",
+        "1>>=1, 1, >>=, 1",
+        "1>>>=1, 1, >>>=, 1",
+        "1++1, 1, ++, 1",
+        "1--1, 1, --, 1",
+    })
+    public void 演算子を個別の単語として解析する(String source, String expected1, String expected2, String expected3) {
+        Index index = new Index(0);
+        Phrase signature = new Phrase(source, index);
+
+        assertEquals(expected1, signature.get(0));
+        assertEquals(expected2, signature.get(1));
+        assertEquals(expected3, signature.get(2));
     }
 
     @Test

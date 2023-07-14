@@ -1,6 +1,7 @@
 package jp.co.javanalysis.phrase;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
@@ -8,6 +9,10 @@ import java.util.stream.Stream;
 import javasvg.Index;
 
 public class Phrase {
+
+    /** 単語としてみなす文字列*/
+    final static List<String> WORDS = Arrays.asList("\\+", "-", "\\*", "/", "%", "<", ">", ",", "=", "\\(", "\\)", "!=");
+
     final private List<String> stringList;
     final private List<String> commentList;
     
@@ -39,10 +44,9 @@ public class Phrase {
         // 単語の切れ目だったら区切る
         if(source.substring(index.get()).startsWith("/*")
             || source.substring(index.get()).startsWith("//")
-            || c == '(' || c == ')' || c == '{' || c == '}'
-            || c == ' ' || c == '\n' || c == '\t' || c == '\r'
-            || c == '+' || c == '-' || c == '*' || c == '/' || c == '<' || c == '>'
-            || c == ',' || c == '='){
+            || source.substring(index.get()).matches("^(" + String.join("|", WORDS) + ").*")
+            || c == '{' || c == '}'
+            || c == ' ' || c == '\n' || c == '\t' || c == '\r'){
           if(word.length() > 0){
             list.add(word);
             word = "";
@@ -93,8 +97,8 @@ public class Phrase {
           list.add(source.substring(index.get()).substring(0, 2));
           index.add(2);
         }
-        else if(c == ',' || c == '='|| c == '(' || c == ')' || c == '+' || c == '-' || c == '*' || c == '/' || c == '<' || c == '>'){
-          list.add(String.valueOf(c));
+        else if(source.substring(index.get()).matches("^(" + String.join("|", WORDS) + ").*")){
+          list.add(source.substring(index.get()).substring(0, 2));
           index.increment();
         }   
         else if (c == ' ' || c == '\n' || c == '\t' || c == '\r') {

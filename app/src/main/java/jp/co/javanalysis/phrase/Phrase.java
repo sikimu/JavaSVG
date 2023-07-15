@@ -14,13 +14,21 @@ import jp.co.javanalysis.StartEndPoint;
 public class Phrase {
 
   /** 1文字で単語としてみなす文字列 */
-  final static List<String> WORDS1 = Arrays.asList("\\+", "-", "\\*", "/", "%", "<", ">", ",", "=", "\\(", "\\)");
+  final static List<String> WORDS1 = Arrays.asList(
+    "\\+", "-", "\\*", "/", "%", 
+    "<", ">", 
+    ",", 
+    "=", "\\(", "\\)", 
+    "&", "\\|", "\\^", "~", "!", "\\?", ":");
 
   /** 2文字で単語としてみなす文字列 */
-  final static List<String> WORDS2 = Arrays.asList("==");
+  final static List<String> WORDS2 = Arrays.asList("==", "!=", "<=", ">=", "&&", "\\|\\|", "\\+=", "-=", "\\*=", "/=", "%=", "\\+\\+", "--", "->", "<<",">>", "\\|=", "&=", "\\^=");
 
   /** 3文字で単語としてみなす文字列 */
-  final static List<String> WORDS3 = Arrays.asList("aaaaaaaaaaaaaaaaaaaaaaa");
+  final static List<String> WORDS3 = Arrays.asList(">>>", "<<=", ">>=");
+
+  /** 4文字で単語としてみなす文字列 */
+  final static List<String> WORDS4 = Arrays.asList(">>>=");
 
   final private List<String> stringList;
   final private List<String> commentList;
@@ -51,19 +59,14 @@ public class Phrase {
       // 1文字で文節とするもの
       c = source.charAt(index.get());
 
-      // 単語の切れ目だったら区切る
-      if (source.substring(index.get()).startsWith("/*")
-          || source.substring(index.get()).startsWith("//")
-          || source.substring(index.get()).matches("^(" + String.join("|", WORDS1) + ").*")
-          || source.substring(index.get()).matches("^(" + String.join("|", WORDS2) + ").*")
-          || source.substring(index.get()).matches("^(" + String.join("|", WORDS3) + ").*")
-          || c == '{' || c == '}'
-          || c == ' ' || c == '\n' || c == '\t' || c == '\r') {
-        if (word.length() > 0) {
-          list.add(word);
-          word = "";
-        }
-      }
+      if (c == ' ' || c == '\n' || c == '\t' || c == '\r') {
+        index.increment();
+        continue;
+      } 
+
+      if (c == '{' || c == '}' || c == ';') {
+        break;
+      }      
 
       StartEndPoint sep = searchWordArea(source, index.get());
       String readWord = source.substring(sep.start, sep.end);
@@ -72,20 +75,9 @@ public class Phrase {
         tempCommentList.add(readWord);
         index.set(sep.end);
       } 
-      else if (readWord.startsWith("\"") || readWord.startsWith("'") ||
-        source.substring(index.get()).matches("^(" + String.join("|", WORDS1) + ").*") ||
-        source.substring(index.get()).matches("^(" + String.join("|", WORDS2) + ").*") ||
-        source.substring(index.get()).matches("^(" + String.join("|", WORDS3) + ").*")){
+      else{
         list.add(readWord);
         index.set(sep.end);
-      }
-      else if (c == ' ' || c == '\n' || c == '\t' || c == '\r') {
-        index.increment();
-      } else if (c == '{' || c == '}' || c == ';') {
-        break;
-      } else {
-        word += c;
-        index.increment();
       }
     }
 
@@ -128,6 +120,9 @@ public class Phrase {
       }
       return new StartEndPoint(i, end);
     }  
+    else if (source.substring(i).matches("^(" + String.join("|", WORDS4) + ").*")){
+      return new StartEndPoint(i, i + 4);
+    }      
     else if (source.substring(i).matches("^(" + String.join("|", WORDS3) + ").*")){
       return new StartEndPoint(i, i + 3);
     }       
@@ -137,9 +132,25 @@ public class Phrase {
     else if (source.substring(i).matches("^(" + String.join("|", WORDS1) + ").*")){
       return new StartEndPoint(i, i + 1);
     }    
-     
-
-    return new StartEndPoint(0,1);
+    else {
+      int end = i + 1;
+      while (end < source.length()) {
+        char c = source.charAt(end);
+        // 単語の切れ目だったら区切る
+        if (source.substring(end).startsWith("/*")
+            || source.substring(end).startsWith("//")
+            || source.substring(end).matches("^(" + String.join("|", WORDS1) + ").*")
+            || source.substring(end).matches("^(" + String.join("|", WORDS2) + ").*")
+            || source.substring(end).matches("^(" + String.join("|", WORDS3) + ").*")
+            || source.substring(end).matches("^(" + String.join("|", WORDS4) + ").*")
+            || c == '{' || c == '}'
+            || c == ' ' || c == '\n' || c == '\t' || c == '\r' | c == ';') {
+          break;
+        }
+        end++;
+      }
+      return new StartEndPoint(i, end);
+    }
   }
 
   private Phrase(List<String> stringList, List<String> commentList) {

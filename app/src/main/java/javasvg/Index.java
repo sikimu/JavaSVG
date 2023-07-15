@@ -19,4 +19,9 @@ public class Index{
     public void add(int i) {
         index += i;
     }
+
+    //最終的には削除する
+    public void set(int i) {
+        index = i;
+    }
 }

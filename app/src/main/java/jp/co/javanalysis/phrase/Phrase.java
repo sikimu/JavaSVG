@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import javasvg.Index;
@@ -55,25 +57,12 @@ public class Phrase {
         }
       }
 
-      StartEndPoint area = searchWordArea(source, index);
-      String readWord = source.substring(area.start, area.end);
+      StartEndPoint sep = searchWordArea(source, index.get());
+      String readWord = source.substring(sep.start, sep.end);
 
-      if (readWord.startsWith("/*")) {
-        int end = source.substring(index.get()).indexOf("*/", 2);
+      if (readWord.startsWith("/*") || readWord.startsWith("//")) {
         tempCommentList.add(readWord);
-        index.add(end + 2);
-      } else if (source.substring(index.get()).startsWith("//")) {
-        while (index.get() < source.length()) {
-          c = source.charAt(index.get());
-          if (c == '\n' || c == '\r') {
-            break;
-          }
-          word += c;
-          index.increment();
-        }
-        tempCommentList.add(word);
-        word = "";
-        index.increment();
+        index.set(sep.end);
       } else if (c == '"' || c == '\'') {
         char quote = c;
         word += c;
@@ -117,12 +106,22 @@ public class Phrase {
     commentList = Collections.unmodifiableList(tempCommentList);
   }
 
-  private StartEndPoint searchWordArea(String source, Index index) {
+  private StartEndPoint searchWordArea(String source, final int i) {
 
-    if (source.substring(index.get()).startsWith("/*")) {
-      int end = source.substring(index.get()).indexOf("*/", 2);
-      return new StartEndPoint(index.get(), index.get() + end + 2);
+    if (source.substring(i).startsWith("/*")) {
+      int end = source.substring(i).indexOf("*/", 2);
+      return new StartEndPoint(i, i + end + 2);
     }
+    else if (source.substring(i).startsWith("//")) {
+      Pattern pattern = Pattern.compile("\\r|\\n");
+      Matcher matcher = pattern.matcher(source.substring(i));
+      if (matcher.find()) {
+          int end = matcher.start();
+          return new StartEndPoint(i, i + end);
+      } else {
+          return new StartEndPoint(i, source.length());
+      }      
+    }    
 
     return new StartEndPoint(0,1);
   }
